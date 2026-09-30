@@ -1,7 +1,32 @@
 [
-  {"name":"Tender date","date":"18 Sep 2026","state":"Tender issued","kind":"neutral"},
-  {"name":"Version on tender date","date":"Sample registry entry","state":"Needs officer verification","kind":"warning"},
-  {"name":"Current version","date":"30 Sep 2026","state":"Registry snapshot · Sample","kind":"active"},
-  {"name":"Later amendment","date":"No verified data","state":"Cannot verify","kind":"neutral"},
-  {"name":"Successor","date":"IS XXXX · Sample","state":"Review suggested","kind":"warning"}
+  {
+    "name": "Tender date",
+    "date": "18 Sep 2026",
+    "state": "Tender issued",
+    "kind": "neutral"
+  },
+  {
+    "name": "Version on tender date",
+    "date": "Sample registry entry",
+    "state": "Needs officer verification",
+    "kind": "warning"
+  },
+  {
+    "name": "Current version",
+    "date": "30 Sep 2026",
+    "state": "Registry snapshot · Sample",
+    "kind": "active"
+  },
+  {
+    "name": "Later amendment",
+    "date": "No verified data",
+    "state": "Cannot verify",
+    "kind": "neutral"
+  },
+  {
+    "name": "Successor",
+    "date": "IS XXXX · Sample",
+    "state": "Review suggested",
+    "kind": "warning"
+  }
 ]

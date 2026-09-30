@@ -1,14 +1,57 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, animate as animateValue, motion, useMotionValue, useTransform } from "framer-motion";
 import {
-  Activity, ArrowDownRight, ArrowLeftRight, ArrowRight, ArrowUpRight, Bell,
-  BookOpen, Box, CalendarDays, Check, CheckCheck, ChevronDown, ChevronRight,
-  CircleAlert, CircleCheck, CircleHelp, Clipboard, Clock3, Copy, Download,
-  ExternalLink, FileCheck2, FileSearch, FileText, Filter, FlaskConical, Gauge,
-  Hash, History, Layers3, Lightbulb, ListChecks, Menu, MoreHorizontal, Plus,
-  Search, Settings2, ShieldCheck, SlidersHorizontal, Sparkles, Upload, Workflow, X,
+  AnimatePresence,
+  animate as animateValue,
+  motion,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
+import {
+  Activity,
+  ArrowDownRight,
+  ArrowLeftRight,
+  ArrowRight,
+  ArrowUpRight,
+  Bell,
+  BookOpen,
+  Box,
+  CalendarDays,
+  Check,
+  CheckCheck,
+  ChevronDown,
+  ChevronRight,
+  CircleAlert,
+  CircleCheck,
+  CircleHelp,
+  Clipboard,
+  Clock3,
+  Copy,
+  Download,
+  ExternalLink,
+  FileCheck2,
+  FileSearch,
+  FileText,
+  Filter,
+  FlaskConical,
+  Gauge,
+  Hash,
+  History,
+  Layers3,
+  Lightbulb,
+  ListChecks,
+  Menu,
+  MoreHorizontal,
+  Plus,
+  Search,
+  Settings2,
+  ShieldCheck,
+  SlidersHorizontal,
+  Sparkles,
+  Upload,
+  Workflow,
+  X,
 } from "lucide-react";
 import tenders from "../../data/tenders.json";
 import standards from "../../data/standards.json";
@@ -18,54 +61,161 @@ import versions from "../../data/versions.json";
 import certifications from "../../data/certifications.json";
 import alerts from "../../data/alerts.json";
 
-const tenderText = "Supply of LED lamps, good quality, conforming to relevant IS.";
-const flow = ["input", "requirements", "standards", "versions", "audit", "matrix", "improved", "approval"];
+const tenderText =
+  "Supply of LED lamps, good quality, conforming to relevant IS.";
+const flow = [
+  "input",
+  "requirements",
+  "standards",
+  "versions",
+  "audit",
+  "matrix",
+  "improved",
+  "approval",
+];
 const labels = {
-  home: "Overview", input: "New audit", requirements: "Requirements", standards: "Standards",
-  versions: "Version & certification", audit: "Tender audit", matrix: "Compliance matrix",
-  improved: "Improved tender", approval: "Final review", tools: "More tools", about: "About & limits",
+  home: "Overview",
+  input: "New audit",
+  requirements: "Requirements",
+  standards: "Standards",
+  versions: "Version & certification",
+  audit: "Tender audit",
+  matrix: "Compliance matrix",
+  improved: "Improved tender",
+  approval: "Final review",
+  tools: "More tools",
+  about: "About & limits",
 };
 const navGroups = [
   { title: "WORKSPACE", items: ["home", "input"] },
-  { title: "AUDIT FLOW", items: ["requirements", "standards", "versions", "audit", "matrix", "improved", "approval"] },
+  {
+    title: "AUDIT FLOW",
+    items: [
+      "requirements",
+      "standards",
+      "versions",
+      "audit",
+      "matrix",
+      "improved",
+      "approval",
+    ],
+  },
   { title: "RESOURCES", items: ["tools", "about"] },
 ];
 const navIcons = {
-  home: Gauge, input: Plus, requirements: ListChecks, standards: BookOpen, versions: History,
-  audit: ShieldCheck, matrix: SlidersHorizontal, improved: FileCheck2, approval: CheckCheck,
-  tools: MoreHorizontal, about: CircleHelp,
+  home: Gauge,
+  input: Plus,
+  requirements: ListChecks,
+  standards: BookOpen,
+  versions: History,
+  audit: ShieldCheck,
+  matrix: SlidersHorizontal,
+  improved: FileCheck2,
+  approval: CheckCheck,
+  tools: MoreHorizontal,
+  about: CircleHelp,
 };
-const categories = ["All", "Main", "Test", "Safety", "Terminology", "Installation", "Referenced"];
-const stages = ["Reading tender", "Extracting requirements", "Finding standards", "Checking versions", "Building audit"];
+const categories = [
+  "All",
+  "Main",
+  "Test",
+  "Safety",
+  "Terminology",
+  "Installation",
+  "Referenced",
+];
+const stages = [
+  "Reading tender",
+  "Extracting requirements",
+  "Finding standards",
+  "Checking versions",
+  "Building audit",
+];
 
 function Button({ children, variant = "primary", className = "", ...props }) {
-  return <motion.button whileHover={{ scale: 1.015 }} whileTap={{ scale: 0.985 }} className={`button button-${variant} ${className}`} {...props}>{children}</motion.button>;
+  return (
+    <motion.button
+      whileHover={{ scale: 1.015 }}
+      whileTap={{ scale: 0.985 }}
+      className={`button button-${variant} ${className}`}
+      {...props}
+    >
+      {children}
+    </motion.button>
+  );
 }
 function Badge({ children, tone = "neutral", dot = false }) {
-  return <span className={`badge badge-${tone}`}>{dot && <i />}{children}</span>;
+  return (
+    <span className={`badge badge-${tone}`}>
+      {dot && <i />}
+      {children}
+    </span>
+  );
 }
 function AnimatedCount({ value }) {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (current) => Math.round(current));
   useEffect(() => {
-    const animation = animateValue(count, value, { duration: 0.85, delay: 0.1, ease: "easeOut" });
+    const animation = animateValue(count, value, {
+      duration: 0.85,
+      delay: 0.1,
+      ease: "easeOut",
+    });
     return animation.stop;
   }, [count, value]);
   return <motion.strong>{rounded}</motion.strong>;
 }
-function PrototypeTag() { return <span className="prototype-tag"><span />Sample data · Prototype</span>; }
+function PrototypeTag() {
+  return (
+    <span className="prototype-tag">
+      <span />
+      Sample data · Prototype
+    </span>
+  );
+}
 function PageHeading({ eyebrow, title, description, right }) {
-  return <div className="page-heading"><div><div className="eyebrow">{eyebrow || "SPECIFICATION WORKSPACE"}</div><h1>{title}</h1>{description && <p>{description}</p>}</div>{right}</div>;
+  return (
+    <div className="page-heading">
+      <div>
+        <div className="eyebrow">{eyebrow || "SPECIFICATION WORKSPACE"}</div>
+        <h1>{title}</h1>
+        {description && <p>{description}</p>}
+      </div>
+      {right}
+    </div>
+  );
 }
 function ProgressLine({ current }) {
   const currentIndex = flow.indexOf(current);
-  return <div className="flow-progress" aria-label="Audit workflow progress">
-    {flow.map((step, index) => <button key={step} onClick={() => window.dispatchEvent(new CustomEvent("navigate-audit", { detail: step }))} className={`flow-step ${index <= currentIndex ? "done" : ""} ${step === current ? "current" : ""}`} title={labels[step]}>
-      <span className="flow-node">{index < currentIndex ? <Check size={11} /> : String(index + 1).padStart(2, "0")}</span><span className="flow-label">{labels[step]}</span>
-    </button>)}
-  </div>;
+  return (
+    <div className="flow-progress" aria-label="Audit workflow progress">
+      {flow.map((step, index) => (
+        <button
+          key={step}
+          onClick={() =>
+            window.dispatchEvent(
+              new CustomEvent("navigate-audit", { detail: step }),
+            )
+          }
+          className={`flow-step ${index <= currentIndex ? "done" : ""} ${step === current ? "current" : ""}`}
+          title={labels[step]}
+        >
+          <span className="flow-node">
+            {index < currentIndex ? (
+              <Check size={11} />
+            ) : (
+              String(index + 1).padStart(2, "0")
+            )}
+          </span>
+          <span className="flow-label">{labels[step]}</span>
+        </button>
+      ))}
+    </div>
+  );
 }
-function EmptyLine({ children }) { return <div className="empty-line">{children}</div>; }
+function EmptyLine({ children }) {
+  return <div className="empty-line">{children}</div>;
+}
 
 export default function Workspace() {
   const [page, setPage] = useState("home");
@@ -90,8 +240,15 @@ export default function Workspace() {
   const [wizardStep, setWizardStep] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState("");
 
-  const notify = (message) => { setToast(message); window.setTimeout(() => setToast(""), 2600); };
-  const navigate = (next) => { setPage(next); setMobileNav(false); setDrawer(null); };
+  const notify = (message) => {
+    setToast(message);
+    window.setTimeout(() => setToast(""), 2600);
+  };
+  const navigate = (next) => {
+    setPage(next);
+    setMobileNav(false);
+    setDrawer(null);
+  };
   useEffect(() => {
     const listener = (event) => navigate(event.detail);
     window.addEventListener("navigate-audit", listener);
@@ -110,170 +267,2473 @@ export default function Workspace() {
     return () => window.clearTimeout(timer);
   }, [loadingStage]);
 
-  function loadSample() { setTender(""); window.setTimeout(() => setTender(tenderText), 120); notify("Sample tender loaded"); }
-  function startAnalysis() { if (!tender.trim()) { notify("Add tender text to begin"); return; } setLoadingStage(0); }
-  async function copyText(value) {
-    try { await navigator.clipboard.writeText(value); setCopied(true); notify("Copied to clipboard"); window.setTimeout(() => setCopied(false), 1800); }
-    catch { notify("Copy is unavailable in this preview"); }
+  function loadSample() {
+    setTender("");
+    window.setTimeout(() => setTender(tenderText), 120);
+    notify("Sample tender loaded");
   }
-  function addClause(gap) { setAddedGaps((items) => items.some((item) => item.title === gap.title) ? items : [...items, gap]); setDrawer(null); notify("Suggested clause added to improved tender"); }
-  function openStandard(item) { setDrawer({ kind: "standard", item }); }
+  function startAnalysis() {
+    if (!tender.trim()) {
+      notify("Add tender text to begin");
+      return;
+    }
+    setLoadingStage(0);
+  }
+  async function copyText(value) {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      notify("Copied to clipboard");
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      notify("Copy is unavailable in this preview");
+    }
+  }
+  function addClause(gap) {
+    setAddedGaps((items) =>
+      items.some((item) => item.title === gap.title) ? items : [...items, gap],
+    );
+    setDrawer(null);
+    notify("Suggested clause added to improved tender");
+  }
+  function openStandard(item) {
+    setDrawer({ kind: "standard", item });
+  }
 
-  const visibleStandards = standards.filter((item) => filter === "All" || item.type === filter);
+  const visibleStandards = standards.filter(
+    (item) => filter === "All" || item.type === filter,
+  );
   const matrixRows = [
-    ...audit.covered.map((item) => ({ ...item, status: "Covered", standard: "IS XXXX" })),
-    ...audit.gaps.map((item) => ({ ...item, status: "Needs attention", standard: "IS XXXX" })),
-  ].filter((item) => `${item.title} ${item.type} ${item.standard}`.toLowerCase().includes(matrixQuery.toLowerCase()))
-    .filter((item) => matrixStatus === "All statuses" || item.status === matrixStatus)
-    .sort((a, b) => matrixSort === "Status" ? a.status.localeCompare(b.status) : a.title.localeCompare(b.title));
+    ...audit.covered.map((item) => ({
+      ...item,
+      status: "Covered",
+      standard: "IS XXXX",
+    })),
+    ...audit.gaps.map((item) => ({
+      ...item,
+      status: "Needs attention",
+      standard: "IS XXXX",
+    })),
+  ]
+    .filter((item) =>
+      `${item.title} ${item.type} ${item.standard}`
+        .toLowerCase()
+        .includes(matrixQuery.toLowerCase()),
+    )
+    .filter(
+      (item) => matrixStatus === "All statuses" || item.status === matrixStatus,
+    )
+    .sort((a, b) =>
+      matrixSort === "Status"
+        ? a.status.localeCompare(b.status)
+        : a.title.localeCompare(b.title),
+    );
 
-  return <div className="app-shell">
-    <aside className={`sidebar ${mobileNav ? "sidebar-open" : ""}`}>
-      <div className="brand-lockup"><div className="brand-mark"><span className="brand-mark-top"/><span className="brand-mark-bottom"/></div><div><strong>SpecAudit<span>-IS</span></strong><small>AI TENDER AUDITOR</small></div><button className="icon-button mobile-close" onClick={() => setMobileNav(false)} aria-label="Close navigation"><X size={18}/></button></div>
-      <div className="workspace-switch"><div className="workspace-avatar">G</div><div><strong>Procurement desk</strong><small>Government · Demo</small></div><ChevronDown size={15}/></div>
-      <nav className="side-nav">{navGroups.map((group) => <div className="nav-group" key={group.title}><div className="nav-caption">{group.title}</div>{group.items.map((item) => { const Icon = navIcons[item]; return <button key={item} className={`nav-item ${page === item ? "nav-active" : ""}`} onClick={() => navigate(item)}><Icon size={17} strokeWidth={1.8}/><span>{labels[item]}</span>{item === "audit" && <span className="nav-alert"/>}</button>; })}</div>)}</nav>
-      <div className="sidebar-bottom"><div className="registry-mini"><div className="registry-mini-icon"><ShieldCheck size={16}/></div><div><span>REGISTRY SNAPSHOT</span><strong>30 Sep 2026</strong></div><span className="live-dot"/></div><button className="profile-row" onClick={() => notify("Officer profile · Demo mode")}><div className="profile-avatar">AS</div><div><strong>A. Sharma</strong><small>Review officer</small></div><MoreHorizontal size={17}/></button></div>
-    </aside>
-    {mobileNav && <button className="sidebar-backdrop" onClick={() => setMobileNav(false)} aria-label="Close navigation"/>}
-    <main className="main-shell">
-      <header className="topbar"><div className="topbar-left"><button className="icon-button menu-toggle" onClick={() => setMobileNav(true)} aria-label="Open navigation"><Menu size={19}/></button><div className="breadcrumbs"><span>Workspace</span><ChevronRight size={13}/><strong>{labels[page]}</strong></div></div><div className="topbar-right"><div className="top-registry"><span className="registry-pulse"/>Registry as of <strong>30 Sep 2026</strong></div><button className="language-select" onClick={() => setLanguage(language === "English" ? "हिंदी" : "English")}>{language}<ChevronDown size={13}/></button><button className="icon-button notification-button" aria-label="Notifications" onClick={() => navigate("tools")}><Bell size={17}/><i/></button><div className="top-avatar">AS</div></div></header>
-      <div className="main-content">
-        <div className="content-topline"><PrototypeTag/><div className="saved-status"><span/>All changes saved locally</div></div>
-        <ProgressLine current={page}/>
-        <AnimatePresence mode="wait">
-          <motion.div key={page} className="page-view" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.23, ease: "easeOut" }}>
-            {page === "home" && <HomePage navigate={navigate} loadSample={loadSample}/>}
-            {page === "input" && <InputPage tender={tender} setTender={setTender} inputTab={inputTab} setInputTab={setInputTab} language={language} setLanguage={setLanguage} loadSample={loadSample} startAnalysis={startAnalysis} loadingStage={loadingStage}/>}
-            {page === "requirements" && <RequirementsPage tender={tender} openDrawer={setDrawer} navigate={navigate}/>}
-            {page === "standards" && <StandardsPage filter={filter} setFilter={setFilter} visibleStandards={visibleStandards} openStandard={openStandard} navigate={navigate}/>}
-            {page === "versions" && <VersionsPage openStandard={openStandard} navigate={navigate}/>}
-            {page === "audit" && <AuditPage openGap={(item) => setDrawer({ kind: "gap", item })} navigate={navigate}/>}
-            {page === "matrix" && <MatrixPage rows={matrixRows} query={matrixQuery} setQuery={setMatrixQuery} status={matrixStatus} setStatus={setMatrixStatus} sort={matrixSort} setSort={setMatrixSort} openRow={(item) => setDrawer({ kind: "row", item })} navigate={navigate}/>}
-            {page === "improved" && <ImprovedPage tender={tender} addedGaps={addedGaps} copyText={copyText} copied={copied} openStandard={openStandard} notify={notify} navigate={navigate}/>}
-            {page === "approval" && <ApprovalPage approved={approved} setApprovalOpen={setApprovalOpen} navigate={navigate}/>}
-            {page === "tools" && <ToolsPage toolTab={toolTab} setToolTab={setToolTab} openStandard={openStandard} registryInput={registryInput} setRegistryInput={setRegistryInput} registryChecked={registryChecked} setRegistryChecked={setRegistryChecked} wizardStep={wizardStep} setWizardStep={setWizardStep} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} openGap={(item) => setDrawer({ kind: "wording", item })} navigate={navigate} notify={notify}/>}
-            {page === "about" && <AboutPage/>}
+  return (
+    <div className="app-shell">
+      <aside className={`sidebar ${mobileNav ? "sidebar-open" : ""}`}>
+        <div className="brand-lockup">
+          <div className="brand-mark">
+            <span className="brand-mark-top" />
+            <span className="brand-mark-bottom" />
+          </div>
+          <div>
+            <strong>
+              SpecAudit<span>-IS</span>
+            </strong>
+            <small>AI TENDER AUDITOR</small>
+          </div>
+          <button
+            className="icon-button mobile-close"
+            onClick={() => setMobileNav(false)}
+            aria-label="Close navigation"
+          >
+            <X size={18} />
+          </button>
+        </div>
+        <div className="workspace-switch">
+          <div className="workspace-avatar">G</div>
+          <div>
+            <strong>Procurement desk</strong>
+            <small>Government · Demo</small>
+          </div>
+          <ChevronDown size={15} />
+        </div>
+        <nav className="side-nav">
+          {navGroups.map((group) => (
+            <div className="nav-group" key={group.title}>
+              <div className="nav-caption">{group.title}</div>
+              {group.items.map((item) => {
+                const Icon = navIcons[item];
+                return (
+                  <button
+                    key={item}
+                    className={`nav-item ${page === item ? "nav-active" : ""}`}
+                    onClick={() => navigate(item)}
+                  >
+                    <Icon size={17} strokeWidth={1.8} />
+                    <span>{labels[item]}</span>
+                    {item === "audit" && <span className="nav-alert" />}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </nav>
+        <div className="sidebar-bottom">
+          <div className="registry-mini">
+            <div className="registry-mini-icon">
+              <ShieldCheck size={16} />
+            </div>
+            <div>
+              <span>REGISTRY SNAPSHOT</span>
+              <strong>30 Sep 2026</strong>
+            </div>
+            <span className="live-dot" />
+          </div>
+          <button
+            className="profile-row"
+            onClick={() => notify("Officer profile · Demo mode")}
+          >
+            <div className="profile-avatar">AS</div>
+            <div>
+              <strong>A. Sharma</strong>
+              <small>Review officer</small>
+            </div>
+            <MoreHorizontal size={17} />
+          </button>
+        </div>
+      </aside>
+      {mobileNav && (
+        <button
+          className="sidebar-backdrop"
+          onClick={() => setMobileNav(false)}
+          aria-label="Close navigation"
+        />
+      )}
+      <main className="main-shell">
+        <header className="topbar">
+          <div className="topbar-left">
+            <button
+              className="icon-button menu-toggle"
+              onClick={() => setMobileNav(true)}
+              aria-label="Open navigation"
+            >
+              <Menu size={19} />
+            </button>
+            <div className="breadcrumbs">
+              <span>Workspace</span>
+              <ChevronRight size={13} />
+              <strong>{labels[page]}</strong>
+            </div>
+          </div>
+          <div className="topbar-right">
+            <div className="top-registry">
+              <span className="registry-pulse" />
+              Registry as of <strong>30 Sep 2026</strong>
+            </div>
+            <button
+              className="language-select"
+              onClick={() =>
+                setLanguage(language === "English" ? "हिंदी" : "English")
+              }
+            >
+              {language}
+              <ChevronDown size={13} />
+            </button>
+            <button
+              className="icon-button notification-button"
+              aria-label="Notifications"
+              onClick={() => navigate("tools")}
+            >
+              <Bell size={17} />
+              <i />
+            </button>
+            <div className="top-avatar">AS</div>
+          </div>
+        </header>
+        <div className="main-content">
+          <div className="content-topline">
+            <PrototypeTag />
+            <div className="saved-status">
+              <span />
+              All changes saved locally
+            </div>
+          </div>
+          <ProgressLine current={page} />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={page}
+              className="page-view"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.23, ease: "easeOut" }}
+            >
+              {page === "home" && (
+                <HomePage navigate={navigate} loadSample={loadSample} />
+              )}
+              {page === "input" && (
+                <InputPage
+                  tender={tender}
+                  setTender={setTender}
+                  inputTab={inputTab}
+                  setInputTab={setInputTab}
+                  language={language}
+                  setLanguage={setLanguage}
+                  loadSample={loadSample}
+                  startAnalysis={startAnalysis}
+                  loadingStage={loadingStage}
+                />
+              )}
+              {page === "requirements" && (
+                <RequirementsPage
+                  tender={tender}
+                  openDrawer={setDrawer}
+                  navigate={navigate}
+                />
+              )}
+              {page === "standards" && (
+                <StandardsPage
+                  filter={filter}
+                  setFilter={setFilter}
+                  visibleStandards={visibleStandards}
+                  openStandard={openStandard}
+                  navigate={navigate}
+                />
+              )}
+              {page === "versions" && (
+                <VersionsPage openStandard={openStandard} navigate={navigate} />
+              )}
+              {page === "audit" && (
+                <AuditPage
+                  openGap={(item) => setDrawer({ kind: "gap", item })}
+                  navigate={navigate}
+                />
+              )}
+              {page === "matrix" && (
+                <MatrixPage
+                  rows={matrixRows}
+                  query={matrixQuery}
+                  setQuery={setMatrixQuery}
+                  status={matrixStatus}
+                  setStatus={setMatrixStatus}
+                  sort={matrixSort}
+                  setSort={setMatrixSort}
+                  openRow={(item) => setDrawer({ kind: "row", item })}
+                  navigate={navigate}
+                />
+              )}
+              {page === "improved" && (
+                <ImprovedPage
+                  tender={tender}
+                  addedGaps={addedGaps}
+                  copyText={copyText}
+                  copied={copied}
+                  openStandard={openStandard}
+                  notify={notify}
+                  navigate={navigate}
+                />
+              )}
+              {page === "approval" && (
+                <ApprovalPage
+                  approved={approved}
+                  setApprovalOpen={setApprovalOpen}
+                  navigate={navigate}
+                />
+              )}
+              {page === "tools" && (
+                <ToolsPage
+                  toolTab={toolTab}
+                  setToolTab={setToolTab}
+                  openStandard={openStandard}
+                  registryInput={registryInput}
+                  setRegistryInput={setRegistryInput}
+                  registryChecked={registryChecked}
+                  setRegistryChecked={setRegistryChecked}
+                  wizardStep={wizardStep}
+                  setWizardStep={setWizardStep}
+                  selectedProduct={selectedProduct}
+                  setSelectedProduct={setSelectedProduct}
+                  openGap={(item) => setDrawer({ kind: "wording", item })}
+                  navigate={navigate}
+                  notify={notify}
+                />
+              )}
+              {page === "about" && <AboutPage />}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </main>
+      <AnimatePresence>
+        {drawer && (
+          <Drawer
+            drawer={drawer}
+            close={() => setDrawer(null)}
+            addClause={addClause}
+            navigate={navigate}
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {approvalOpen && (
+          <ApprovalModal
+            close={() => setApprovalOpen(false)}
+            approve={() => {
+              setApproved(true);
+              setApprovalOpen(false);
+              notify("Audit approved · demo log updated");
+            }}
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            className="toast"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+          >
+            <CircleCheck size={16} />
+            {toast}
           </motion.div>
-        </AnimatePresence>
-      </div>
-    </main>
-    <AnimatePresence>{drawer && <Drawer drawer={drawer} close={() => setDrawer(null)} addClause={addClause} navigate={navigate}/>}</AnimatePresence>
-    <AnimatePresence>{approvalOpen && <ApprovalModal close={() => setApprovalOpen(false)} approve={() => { setApproved(true); setApprovalOpen(false); notify("Audit approved · demo log updated"); }}/>}</AnimatePresence>
-    <AnimatePresence>{toast && <motion.div className="toast" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}><CircleCheck size={16}/>{toast}</motion.div>}</AnimatePresence>
-  </div>;
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
 
 function HomePage({ navigate, loadSample }) {
-  return <>
-    <div className="home-hero"><div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line"/>TENDER INTELLIGENCE, MADE AUDITABLE</div><h1>Turn ambiguous tenders<br/>into <span>auditable</span> specifications.</h1><p>Analyze requirements, trace standards, detect gaps, and shape an evidence-linked tender draft.</p><div className="hero-actions"><Button onClick={() => navigate("input")}><Sparkles size={16}/>Start new audit<ArrowRight size={16}/></Button><Button variant="secondary" onClick={() => { loadSample(); navigate("input"); }}><FileSearch size={16}/>Load sample tender</Button></div><div className="hero-footnote"><ShieldCheck size={14}/>Officer review required for every recommendation</div></div><div className="hero-visual"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><div className="hero-core"><div className="core-icon"><FileCheck2 size={25}/></div><span>SPECIFICATION<br/>INTELLIGENCE</span></div><div className="orbit-node node-a"><Check size={13}/></div><div className="orbit-node node-b"><BookOpen size={14}/></div><div className="orbit-node node-c"><Activity size={14}/></div><div className="hero-chip chip-one"><span className="chip-dot blue"/>Requirement mapped</div><div className="hero-chip chip-two"><span className="chip-dot green"/>Review-ready output</div><div className="hero-visual-caption">INPUT <span/> TRACE <span/> REVIEW</div></div></div>
-    <div className="section-heading"><div><div className="eyebrow">YOUR WORKSPACE</div><h2>Recent audits</h2></div><button className="text-button" onClick={() => navigate("audit")}>Open audit workspace<ArrowRight size={15}/></button></div>
-    <div className="audit-list">{tenders.map((item, index) => <motion.button key={item.id} className="audit-row" onClick={() => navigate(index === 0 ? "audit" : "requirements")} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 * index }}><div className="audit-row-icon"><FileText size={18}/></div><div className="audit-name"><strong>{item.name}</strong><span>{item.product} <i/> Updated {item.updated}</span></div><div className="audit-coverage"><span>DECISIONS COVERED</span><strong>{item.coverage}</strong></div><Badge tone={item.status === "Approved" ? "green" : item.status === "In progress" ? "blue" : "red"} dot>{item.status}</Badge><div className="audit-row-date">Registry {item.registryDate}</div><ChevronRight className="row-chevron" size={16}/></motion.button>)}</div>
-    <div className="home-bottom-note"><div className="note-icon"><Lightbulb size={17}/></div><span><strong>A guided review, not a black box.</strong> Every suggestion keeps its source visible and leaves the final decision with the officer.</span><button onClick={() => navigate("about")}>How it works<ArrowUpRight size={14}/></button></div>
-  </>;
+  return (
+    <>
+      <div className="home-hero">
+        <div className="hero-copy">
+          <div className="eyebrow">
+            <span className="eyebrow-line" />
+            TENDER INTELLIGENCE, MADE AUDITABLE
+          </div>
+          <h1>
+            Turn ambiguous tenders
+            <br />
+            into <span>auditable</span> specifications.
+          </h1>
+          <p>
+            Analyze requirements, trace standards, detect gaps, and shape an
+            evidence-linked tender draft.
+          </p>
+          <div className="hero-actions">
+            <Button onClick={() => navigate("input")}>
+              <Sparkles size={16} />
+              Start new audit
+              <ArrowRight size={16} />
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                loadSample();
+                navigate("input");
+              }}
+            >
+              <FileSearch size={16} />
+              Load sample tender
+            </Button>
+          </div>
+          <div className="hero-footnote">
+            <ShieldCheck size={14} />
+            Officer review required for every recommendation
+          </div>
+        </div>
+        <div className="hero-visual">
+          <div className="orbit orbit-one" />
+          <div className="orbit orbit-two" />
+          <div className="hero-core">
+            <div className="core-icon">
+              <FileCheck2 size={25} />
+            </div>
+            <span>
+              SPECIFICATION
+              <br />
+              INTELLIGENCE
+            </span>
+          </div>
+          <div className="orbit-node node-a">
+            <Check size={13} />
+          </div>
+          <div className="orbit-node node-b">
+            <BookOpen size={14} />
+          </div>
+          <div className="orbit-node node-c">
+            <Activity size={14} />
+          </div>
+          <div className="hero-chip chip-one">
+            <span className="chip-dot blue" />
+            Requirement mapped
+          </div>
+          <div className="hero-chip chip-two">
+            <span className="chip-dot green" />
+            Review-ready output
+          </div>
+          <div className="hero-visual-caption">
+            INPUT <span /> TRACE <span /> REVIEW
+          </div>
+        </div>
+      </div>
+      <div className="section-heading">
+        <div>
+          <div className="eyebrow">YOUR WORKSPACE</div>
+          <h2>Recent audits</h2>
+        </div>
+        <button className="text-button" onClick={() => navigate("audit")}>
+          Open audit workspace
+          <ArrowRight size={15} />
+        </button>
+      </div>
+      <div className="audit-list">
+        {tenders.map((item, index) => (
+          <motion.button
+            key={item.id}
+            className="audit-row"
+            onClick={() => navigate(index === 0 ? "audit" : "requirements")}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 * index }}
+          >
+            <div className="audit-row-icon">
+              <FileText size={18} />
+            </div>
+            <div className="audit-name">
+              <strong>{item.name}</strong>
+              <span>
+                {item.product} <i /> Updated {item.updated}
+              </span>
+            </div>
+            <div className="audit-coverage">
+              <span>DECISIONS COVERED</span>
+              <strong>{item.coverage}</strong>
+            </div>
+            <Badge
+              tone={
+                item.status === "Approved"
+                  ? "green"
+                  : item.status === "In progress"
+                    ? "blue"
+                    : "red"
+              }
+              dot
+            >
+              {item.status}
+            </Badge>
+            <div className="audit-row-date">Registry {item.registryDate}</div>
+            <ChevronRight className="row-chevron" size={16} />
+          </motion.button>
+        ))}
+      </div>
+      <div className="home-bottom-note">
+        <div className="note-icon">
+          <Lightbulb size={17} />
+        </div>
+        <span>
+          <strong>A guided review, not a black box.</strong> Every suggestion
+          keeps its source visible and leaves the final decision with the
+          officer.
+        </span>
+        <button onClick={() => navigate("about")}>
+          How it works
+          <ArrowUpRight size={14} />
+        </button>
+      </div>
+    </>
+  );
 }
 
-function InputPage({ tender, setTender, inputTab, setInputTab, language, setLanguage, loadSample, startAnalysis, loadingStage }) {
-  return <div className="narrow-page input-page"><div className="center-heading"><div className="eyebrow"><span className="eyebrow-line"/>START A NEW REVIEW</div><h1>What are you auditing<br/>today?</h1><p>Paste a tender requirement, upload a document, or start with a sample.</p></div>
-    <div className="input-workspace"><div className="input-tabs">{["Tender text", "PDF upload", "Description"].map((tab) => <button key={tab} className={inputTab === tab ? "selected" : ""} onClick={() => setInputTab(tab)}>{tab === "Tender text" ? <FileText size={15}/> : tab === "PDF upload" ? <Upload size={15}/> : <Lightbulb size={15}/>} {tab}</button>)}<span className="input-tabs-spacer"/><span className="local-only"><ShieldCheck size={13}/>Local demo</span></div>
-      {inputTab === "PDF upload" ? <button className="upload-zone" onClick={() => setInputTab("Tender text")}><span className="upload-icon"><Upload size={20}/></span><strong>Choose a PDF to preview the workflow</strong><span>File processing is disabled in this prototype.</span><span className="upload-cta">Browse files <ArrowRight size={13}/></span></button> : <textarea value={tender} onChange={(event) => setTender(event.target.value)} placeholder={inputTab === "Description" ? "Describe the product and procurement context..." : "Paste a tender requirement or product description..."} aria-label="Tender requirement"/>}
-      <div className="input-footer"><div className="input-options"><button className="language-toggle" onClick={() => setLanguage(language === "English" ? "हिंदी" : "English")}><span className={language === "English" ? "toggle-on" : ""}>English</span><span className={language !== "English" ? "toggle-on" : ""}>हिंदी</span></button><button className="inline-tool" onClick={() => setInputTab("PDF upload")}><Upload size={14}/>Upload PDF</button><button className="inline-tool" onClick={loadSample}><Sparkles size={14}/>Load sample</button></div><span className="char-count">{tender.length} characters</span></div>
-      <Button className="analyze-button" onClick={startAnalysis} disabled={loadingStage >= 0}>{loadingStage >= 0 ? <><span className="button-spinner"/>Analyzing tender</> : <>Analyze tender<ArrowRight size={17}/></>}</Button>
-      {loadingStage >= 0 && <div className="analysis-progress"><div className="analysis-progress-top"><span><span className="loading-orb"/>Analyzing sample locally</span><span>{Math.min(100, Math.round(((loadingStage + 1) / stages.length) * 100))}%</span></div><div className="progress-track"><motion.i animate={{ width: `${Math.min(100, ((loadingStage + 1) / stages.length) * 100)}%` }}/></div><div className="stage-list">{stages.map((stage, index) => <div key={stage} className={index < loadingStage ? "stage-done" : index === loadingStage ? "stage-current" : ""}>{index < loadingStage ? <Check size={13}/> : index === loadingStage ? <span className="mini-spinner"/> : <span className="stage-empty"/>}{stage}</div>)}</div></div>}
-    </div><div className="input-trust"><ShieldCheck size={15}/><span>Sample text stays in this browser session. No file is sent or processed.</span></div></div>;
+function InputPage({
+  tender,
+  setTender,
+  inputTab,
+  setInputTab,
+  language,
+  setLanguage,
+  loadSample,
+  startAnalysis,
+  loadingStage,
+}) {
+  return (
+    <div className="narrow-page input-page">
+      <div className="center-heading">
+        <div className="eyebrow">
+          <span className="eyebrow-line" />
+          START A NEW REVIEW
+        </div>
+        <h1>
+          What are you auditing
+          <br />
+          today?
+        </h1>
+        <p>
+          Paste a tender requirement, upload a document, or start with a sample.
+        </p>
+      </div>
+      <div className="input-workspace">
+        <div className="input-tabs">
+          {["Tender text", "PDF upload", "Description"].map((tab) => (
+            <button
+              key={tab}
+              className={inputTab === tab ? "selected" : ""}
+              onClick={() => setInputTab(tab)}
+            >
+              {tab === "Tender text" ? (
+                <FileText size={15} />
+              ) : tab === "PDF upload" ? (
+                <Upload size={15} />
+              ) : (
+                <Lightbulb size={15} />
+              )}{" "}
+              {tab}
+            </button>
+          ))}
+          <span className="input-tabs-spacer" />
+          <span className="local-only">
+            <ShieldCheck size={13} />
+            Local demo
+          </span>
+        </div>
+        {inputTab === "PDF upload" ? (
+          <button
+            className="upload-zone"
+            onClick={() => setInputTab("Tender text")}
+          >
+            <span className="upload-icon">
+              <Upload size={20} />
+            </span>
+            <strong>Choose a PDF to preview the workflow</strong>
+            <span>File processing is disabled in this prototype.</span>
+            <span className="upload-cta">
+              Browse files <ArrowRight size={13} />
+            </span>
+          </button>
+        ) : (
+          <textarea
+            value={tender}
+            onChange={(event) => setTender(event.target.value)}
+            placeholder={
+              inputTab === "Description"
+                ? "Describe the product and procurement context..."
+                : "Paste a tender requirement or product description..."
+            }
+            aria-label="Tender requirement"
+          />
+        )}
+        <div className="input-footer">
+          <div className="input-options">
+            <button
+              className="language-toggle"
+              onClick={() =>
+                setLanguage(language === "English" ? "हिंदी" : "English")
+              }
+            >
+              <span className={language === "English" ? "toggle-on" : ""}>
+                English
+              </span>
+              <span className={language !== "English" ? "toggle-on" : ""}>
+                हिंदी
+              </span>
+            </button>
+            <button
+              className="inline-tool"
+              onClick={() => setInputTab("PDF upload")}
+            >
+              <Upload size={14} />
+              Upload PDF
+            </button>
+            <button className="inline-tool" onClick={loadSample}>
+              <Sparkles size={14} />
+              Load sample
+            </button>
+          </div>
+          <span className="char-count">{tender.length} characters</span>
+        </div>
+        <Button
+          className="analyze-button"
+          onClick={startAnalysis}
+          disabled={loadingStage >= 0}
+        >
+          {loadingStage >= 0 ? (
+            <>
+              <span className="button-spinner" />
+              Analyzing tender
+            </>
+          ) : (
+            <>
+              Analyze tender
+              <ArrowRight size={17} />
+            </>
+          )}
+        </Button>
+        {loadingStage >= 0 && (
+          <div className="analysis-progress">
+            <div className="analysis-progress-top">
+              <span>
+                <span className="loading-orb" />
+                Analyzing sample locally
+              </span>
+              <span>
+                {Math.min(
+                  100,
+                  Math.round(((loadingStage + 1) / stages.length) * 100),
+                )}
+                %
+              </span>
+            </div>
+            <div className="progress-track">
+              <motion.i
+                animate={{
+                  width: `${Math.min(100, ((loadingStage + 1) / stages.length) * 100)}%`,
+                }}
+              />
+            </div>
+            <div className="stage-list">
+              {stages.map((stage, index) => (
+                <div
+                  key={stage}
+                  className={
+                    index < loadingStage
+                      ? "stage-done"
+                      : index === loadingStage
+                        ? "stage-current"
+                        : ""
+                  }
+                >
+                  {index < loadingStage ? (
+                    <Check size={13} />
+                  ) : index === loadingStage ? (
+                    <span className="mini-spinner" />
+                  ) : (
+                    <span className="stage-empty" />
+                  )}
+                  {stage}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="input-trust">
+        <ShieldCheck size={15} />
+        <span>
+          Sample text stays in this browser session. No file is sent or
+          processed.
+        </span>
+      </div>
+    </div>
+  );
 }
 
 function RequirementsPage({ tender, openDrawer, navigate }) {
   const [values, setValues] = useState(requirements.map((item) => item.value));
-  return <><PageHeading eyebrow="STEP 01 · EXTRACTION" title="Extracted requirements" description="Review what the system understood before checking standards." right={<Badge tone="blue"><Sparkles size={12}/>AI-assisted · Illustrative</Badge>}/>
-    <div className="split-layout requirements-layout"><section className="panel original-panel"><div className="panel-heading"><div><span className="panel-kicker">SOURCE DOCUMENT</span><h3>Original tender</h3></div><button className="icon-button" title="Open source details" onClick={() => openDrawer({ kind: "source" })}><MoreHorizontal size={18}/></button></div><div className="document-meta"><span><FileText size={14}/>Tender extract</span><span>Sample · 1 paragraph</span></div><div className="tender-quote">{(tender || tenderText).split("good quality").map((part, index, array) => <span key={`${part}-${index}`}>{part}{index < array.length - 1 && <mark className="ambiguous">good quality</mark>}</span>)}</div><div className="quote-note"><CircleAlert size={14}/>Ambiguous wording detected <button onClick={() => openDrawer({ kind: "wording", item: { title: "Non-measurable wording", quote: "good quality", why: "The tender uses a subjective phrase without an auditable acceptance threshold." }})}>See why</button></div><div className="source-foot"><span>EXTRACTED FROM</span><strong>LED_Lighting_Tender_Sample.pdf</strong><span className="source-page">Page 1</span></div></section>
-      <section className="fields-section"><div className="panel-heading"><div><span className="panel-kicker">STRUCTURED OUTPUT</span><h3>Extracted fields</h3></div><span className="fields-count">05 fields</span></div><div className="fields-list">{requirements.map((item, index) => <div className={`field-row confidence-${item.confidence.toLowerCase()}`} key={item.label}><div className="field-symbol">{item.icon === "box" ? <Box size={16}/> : item.icon === "activity" ? <Activity size={16}/> : item.icon === "layers" ? <Layers3 size={16}/> : item.icon === "hash" ? <Hash size={16}/> : <FlaskConical size={16}/>}</div><div className="field-label"><strong>{item.label}</strong><span className={`confidence-text ${item.confidence.toLowerCase()}`}><i/>{item.confidence} confidence</span></div><input value={values[index]} onChange={(event) => setValues((old) => old.map((value, row) => row === index ? event.target.value : value))} aria-label={`${item.label} value`}/><button className="icon-button edit-button" onClick={() => document.querySelectorAll(".fields-list input")[index]?.focus()} aria-label={`Edit ${item.label}`}><Settings2 size={15}/></button></div>)}</div><div className="confidence-legend"><span><i className="legend-high"/>High confidence</span><span><i className="legend-medium"/>Review suggested</span><span><i className="legend-low"/>Needs attention</span></div></section></div>
-    <div className="page-actions"><span><ShieldCheck size={15}/>Extraction is a suggestion. Confirm before proceeding.</span><Button onClick={() => navigate("standards")}>Review complete<ArrowRight size={16}/></Button></div></>;
+  return (
+    <>
+      <PageHeading
+        eyebrow="STEP 01 · EXTRACTION"
+        title="Extracted requirements"
+        description="Review what the system understood before checking standards."
+        right={
+          <Badge tone="blue">
+            <Sparkles size={12} />
+            AI-assisted · Illustrative
+          </Badge>
+        }
+      />
+      <div className="split-layout requirements-layout">
+        <section className="panel original-panel">
+          <div className="panel-heading">
+            <div>
+              <span className="panel-kicker">SOURCE DOCUMENT</span>
+              <h3>Original tender</h3>
+            </div>
+            <button
+              className="icon-button"
+              title="Open source details"
+              onClick={() => openDrawer({ kind: "source" })}
+            >
+              <MoreHorizontal size={18} />
+            </button>
+          </div>
+          <div className="document-meta">
+            <span>
+              <FileText size={14} />
+              Tender extract
+            </span>
+            <span>Sample · 1 paragraph</span>
+          </div>
+          <div className="tender-quote">
+            {(tender || tenderText)
+              .split("good quality")
+              .map((part, index, array) => (
+                <span key={`${part}-${index}`}>
+                  {part}
+                  {index < array.length - 1 && (
+                    <mark className="ambiguous">good quality</mark>
+                  )}
+                </span>
+              ))}
+          </div>
+          <div className="quote-note">
+            <CircleAlert size={14} />
+            Ambiguous wording detected{" "}
+            <button
+              onClick={() =>
+                openDrawer({
+                  kind: "wording",
+                  item: {
+                    title: "Non-measurable wording",
+                    quote: "good quality",
+                    why: "The tender uses a subjective phrase without an auditable acceptance threshold.",
+                  },
+                })
+              }
+            >
+              See why
+            </button>
+          </div>
+          <div className="source-foot">
+            <span>EXTRACTED FROM</span>
+            <strong>LED_Lighting_Tender_Sample.pdf</strong>
+            <span className="source-page">Page 1</span>
+          </div>
+        </section>
+        <section className="fields-section">
+          <div className="panel-heading">
+            <div>
+              <span className="panel-kicker">STRUCTURED OUTPUT</span>
+              <h3>Extracted fields</h3>
+            </div>
+            <span className="fields-count">05 fields</span>
+          </div>
+          <div className="fields-list">
+            {requirements.map((item, index) => (
+              <div
+                className={`field-row confidence-${item.confidence.toLowerCase()}`}
+                key={item.label}
+              >
+                <div className="field-symbol">
+                  {item.icon === "box" ? (
+                    <Box size={16} />
+                  ) : item.icon === "activity" ? (
+                    <Activity size={16} />
+                  ) : item.icon === "layers" ? (
+                    <Layers3 size={16} />
+                  ) : item.icon === "hash" ? (
+                    <Hash size={16} />
+                  ) : (
+                    <FlaskConical size={16} />
+                  )}
+                </div>
+                <div className="field-label">
+                  <strong>{item.label}</strong>
+                  <span
+                    className={`confidence-text ${item.confidence.toLowerCase()}`}
+                  >
+                    <i />
+                    {item.confidence} confidence
+                  </span>
+                </div>
+                <input
+                  value={values[index]}
+                  onChange={(event) =>
+                    setValues((old) =>
+                      old.map((value, row) =>
+                        row === index ? event.target.value : value,
+                      ),
+                    )
+                  }
+                  aria-label={`${item.label} value`}
+                />
+                <button
+                  className="icon-button edit-button"
+                  onClick={() =>
+                    document
+                      .querySelectorAll(".fields-list input")
+                      [index]?.focus()
+                  }
+                  aria-label={`Edit ${item.label}`}
+                >
+                  <Settings2 size={15} />
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="confidence-legend">
+            <span>
+              <i className="legend-high" />
+              High confidence
+            </span>
+            <span>
+              <i className="legend-medium" />
+              Review suggested
+            </span>
+            <span>
+              <i className="legend-low" />
+              Needs attention
+            </span>
+          </div>
+        </section>
+      </div>
+      <div className="page-actions">
+        <span>
+          <ShieldCheck size={15} />
+          Extraction is a suggestion. Confirm before proceeding.
+        </span>
+        <Button onClick={() => navigate("standards")}>
+          Review complete
+          <ArrowRight size={16} />
+        </Button>
+      </div>
+    </>
+  );
 }
 
-function StandardsPage({ filter, setFilter, visibleStandards, openStandard, navigate }) {
+function StandardsPage({
+  filter,
+  setFilter,
+  visibleStandards,
+  openStandard,
+  navigate,
+}) {
   const [hovered, setHovered] = useState(null);
-  return <><PageHeading eyebrow="STEP 02 · REGISTRY MATCHING" title="Recommended standards" description="Review standards surfaced from the extracted product and tender scope." right={<div className="registry-date"><CalendarDays size={15}/><span>Registry as of</span><strong>30 Sep 2026</strong><Badge>Sample</Badge></div>}/>
-    <div className="standards-toolbar"><div className="filter-tabs">{categories.map((category) => <button key={category} onClick={() => setFilter(category)} className={filter === category ? "selected" : ""}>{category}{category === "All" && <span>{standards.length}</span>}</button>)}</div><button className="inline-tool" onClick={() => openStandard(standards[0])}><Filter size={14}/>Relevance-ranked</button></div>
-    <div className="standards-grid">{visibleStandards.map((item, index) => <motion.article key={item.id} className={`standard-card ${hovered && item.related.includes(hovered) ? "related-highlight" : ""}`} onMouseEnter={() => setHovered(item.id)} onMouseLeave={() => setHovered(null)} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.07 }}><div className="standard-card-top"><div className="standard-emblem"><BookOpen size={17}/></div><Badge tone={item.status === "Active" ? "green" : "red"} dot>{item.status}</Badge></div><div className="standard-code">{item.code}<span>· {item.type}</span></div><h3>{item.title}</h3><p>{item.reason}</p><div className="standard-meta"><span><span className="match-dot"/>{item.match}</span><span>Sample entry</span></div><div className="standard-card-actions"><button className="text-button" onClick={() => openStandard(item)}>Why this standard?<ArrowRight size={14}/></button><button className="icon-button" aria-label="Open BIS record preview" onClick={() => openStandard(item)}><ExternalLink size={15}/></button></div></motion.article>)}</div>
-    <section className="relationship-section"><div className="relationship-heading"><div><div className="eyebrow">TRACEABILITY MAP</div><h2>Standards relationships</h2><p>Illustrative links between surfaced standards. Confirm relationships against an authoritative record.</p></div><Badge><Workflow size={12}/>Sample relationships</Badge></div><div className="relationship-map">{standards.slice(0, 3).map((item, index) => <div className={`relationship-node ${hovered === item.id ? "node-highlight" : ""}`} key={item.id} onMouseEnter={() => setHovered(item.id)} onMouseLeave={() => setHovered(null)} onClick={() => openStandard(item)}><div className="relationship-node-icon"><BookOpen size={16}/></div><div><strong>{item.code}</strong><span>{item.type} standard</span></div><Badge tone={item.status === "Active" ? "green" : "red"}>{item.status}</Badge>{index < 2 && <div className="relationship-connector"><i/></div>}</div>)}</div></section>
-    <div className="page-actions"><span><CircleAlert size={15}/>Registry entries are mock data. Verification is required.</span><Button onClick={() => navigate("versions")}>Check versions<ArrowRight size={16}/></Button></div></>;
+  return (
+    <>
+      <PageHeading
+        eyebrow="STEP 02 · REGISTRY MATCHING"
+        title="Recommended standards"
+        description="Review standards surfaced from the extracted product and tender scope."
+        right={
+          <div className="registry-date">
+            <CalendarDays size={15} />
+            <span>Registry as of</span>
+            <strong>30 Sep 2026</strong>
+            <Badge>Sample</Badge>
+          </div>
+        }
+      />
+      <div className="standards-toolbar">
+        <div className="filter-tabs">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setFilter(category)}
+              className={filter === category ? "selected" : ""}
+            >
+              {category}
+              {category === "All" && <span>{standards.length}</span>}
+            </button>
+          ))}
+        </div>
+        <button
+          className="inline-tool"
+          onClick={() => openStandard(standards[0])}
+        >
+          <Filter size={14} />
+          Relevance-ranked
+        </button>
+      </div>
+      <div className="standards-grid">
+        {visibleStandards.map((item, index) => (
+          <motion.article
+            key={item.id}
+            className={`standard-card ${hovered && item.related.includes(hovered) ? "related-highlight" : ""}`}
+            onMouseEnter={() => setHovered(item.id)}
+            onMouseLeave={() => setHovered(null)}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.07 }}
+          >
+            <div className="standard-card-top">
+              <div className="standard-emblem">
+                <BookOpen size={17} />
+              </div>
+              <Badge tone={item.status === "Active" ? "green" : "red"} dot>
+                {item.status}
+              </Badge>
+            </div>
+            <div className="standard-code">
+              {item.code}
+              <span>· {item.type}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.reason}</p>
+            <div className="standard-meta">
+              <span>
+                <span className="match-dot" />
+                {item.match}
+              </span>
+              <span>Sample entry</span>
+            </div>
+            <div className="standard-card-actions">
+              <button
+                className="text-button"
+                onClick={() => openStandard(item)}
+              >
+                Why this standard?
+                <ArrowRight size={14} />
+              </button>
+              <button
+                className="icon-button"
+                aria-label="Open BIS record preview"
+                onClick={() => openStandard(item)}
+              >
+                <ExternalLink size={15} />
+              </button>
+            </div>
+          </motion.article>
+        ))}
+      </div>
+      <section className="relationship-section">
+        <div className="relationship-heading">
+          <div>
+            <div className="eyebrow">TRACEABILITY MAP</div>
+            <h2>Standards relationships</h2>
+            <p>
+              Illustrative links between surfaced standards. Confirm
+              relationships against an authoritative record.
+            </p>
+          </div>
+          <Badge>
+            <Workflow size={12} />
+            Sample relationships
+          </Badge>
+        </div>
+        <div className="relationship-map">
+          {standards.slice(0, 3).map((item, index) => (
+            <div
+              className={`relationship-node ${hovered === item.id ? "node-highlight" : ""}`}
+              key={item.id}
+              onMouseEnter={() => setHovered(item.id)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => openStandard(item)}
+            >
+              <div className="relationship-node-icon">
+                <BookOpen size={16} />
+              </div>
+              <div>
+                <strong>{item.code}</strong>
+                <span>{item.type} standard</span>
+              </div>
+              <Badge tone={item.status === "Active" ? "green" : "red"}>
+                {item.status}
+              </Badge>
+              {index < 2 && (
+                <div className="relationship-connector">
+                  <i />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+      <div className="page-actions">
+        <span>
+          <CircleAlert size={15} />
+          Registry entries are mock data. Verification is required.
+        </span>
+        <Button onClick={() => navigate("versions")}>
+          Check versions
+          <ArrowRight size={16} />
+        </Button>
+      </div>
+    </>
+  );
 }
 
 function VersionsPage({ openStandard, navigate }) {
-  return <><PageHeading eyebrow="STEP 03 · APPLICABILITY" title="Version & certification" description="Check which requirements may apply at the relevant point in time." right={<Badge tone="blue"><CalendarDays size={13}/>Tender date · 18 Sep 2026</Badge>}/>
-    <section className="timeline-panel"><div className="panel-heading"><div><span className="panel-kicker">ILLUSTRATIVE REGISTRY HISTORY</span><h3>Version timeline</h3></div><button className="text-button" onClick={() => openStandard(standards[0])}>View standard<ArrowUpRight size={14}/></button></div><div className="timeline-standard"><div className="standard-emblem"><BookOpen size={17}/></div><div><strong>IS XXXX</strong><span>LED lamps — general requirements</span></div><Badge>Sample record</Badge></div><div className="version-timeline">{versions.map((version, index) => <div className={`timeline-item timeline-${version.kind}`} key={version.name}><div className="timeline-rail"><i>{version.kind === "active" ? <Check size={12}/> : index + 1}</i>{index < versions.length - 1 && <span/>}</div><div className="timeline-content"><div className="timeline-content-top"><strong>{version.name}</strong><span>{version.date}</span></div><p>{version.state}</p></div></div>)}</div><div className="timeline-caveat"><CircleAlert size={15}/><span>Historical registry and effective-date values are not verified. Confirm directly with the applicable authority.</span></div></section>
-    <section className="cert-section"><div className="section-heading"><div><div className="eyebrow">PRODUCT-SPECIFIC CHECKS</div><h2>Certification requirements</h2></div><Badge>Mock applicability</Badge></div><div className="cert-table"><div className="cert-table-head"><span>REQUIREMENT</span><span>APPLICABILITY</span><span>EFFECTIVE / EXPIRY</span><span>PROOF REQUIREMENT</span></div>{certifications.map((item) => <div className="cert-row" key={item.name}><div className="cert-name"><div className="cert-icon"><ShieldCheck size={16}/></div><strong>{item.name}</strong></div><div><Badge tone={item.applicable === "Not indicated" ? "neutral" : "amber"} dot>{item.applicable}</Badge></div><span className="cert-detail">{item.effective}</span><span className="cert-detail">{item.proof}</span></div>)}</div></section>
-    <section className="proof-clause"><div className="proof-heading"><div className="proof-icon"><Clipboard size={17}/></div><div><span className="panel-kicker">DRAFT · OFFICER REVIEW REQUIRED</span><h3>Proof clause</h3></div><button className="icon-button" onClick={() => navigator.clipboard?.writeText("The supplier shall provide documentary evidence of applicable certification, subject to verification by the procuring authority.")} title="Copy clause"><Copy size={15}/></button></div><p>The supplier shall provide documentary evidence of applicable certification, subject to verification by the procuring authority. Applicable scheme, validity, and proof requirements must be confirmed before issue.</p><span className="clause-source">Source: Sample certification panel · No live registry verification</span></section>
-    <div className="page-actions"><span><ShieldCheck size={15}/>Every applicability decision requires officer review.</span><Button onClick={() => navigate("audit")}>Run tender audit<ArrowRight size={16}/></Button></div></>;
+  return (
+    <>
+      <PageHeading
+        eyebrow="STEP 03 · APPLICABILITY"
+        title="Version & certification"
+        description="Check which requirements may apply at the relevant point in time."
+        right={
+          <Badge tone="blue">
+            <CalendarDays size={13} />
+            Tender date · 18 Sep 2026
+          </Badge>
+        }
+      />
+      <section className="timeline-panel">
+        <div className="panel-heading">
+          <div>
+            <span className="panel-kicker">ILLUSTRATIVE REGISTRY HISTORY</span>
+            <h3>Version timeline</h3>
+          </div>
+          <button
+            className="text-button"
+            onClick={() => openStandard(standards[0])}
+          >
+            View standard
+            <ArrowUpRight size={14} />
+          </button>
+        </div>
+        <div className="timeline-standard">
+          <div className="standard-emblem">
+            <BookOpen size={17} />
+          </div>
+          <div>
+            <strong>IS XXXX</strong>
+            <span>LED lamps — general requirements</span>
+          </div>
+          <Badge>Sample record</Badge>
+        </div>
+        <div className="version-timeline">
+          {versions.map((version, index) => (
+            <div
+              className={`timeline-item timeline-${version.kind}`}
+              key={version.name}
+            >
+              <div className="timeline-rail">
+                <i>
+                  {version.kind === "active" ? <Check size={12} /> : index + 1}
+                </i>
+                {index < versions.length - 1 && <span />}
+              </div>
+              <div className="timeline-content">
+                <div className="timeline-content-top">
+                  <strong>{version.name}</strong>
+                  <span>{version.date}</span>
+                </div>
+                <p>{version.state}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="timeline-caveat">
+          <CircleAlert size={15} />
+          <span>
+            Historical registry and effective-date values are not verified.
+            Confirm directly with the applicable authority.
+          </span>
+        </div>
+      </section>
+      <section className="cert-section">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow">PRODUCT-SPECIFIC CHECKS</div>
+            <h2>Certification requirements</h2>
+          </div>
+          <Badge>Mock applicability</Badge>
+        </div>
+        <div className="cert-table">
+          <div className="cert-table-head">
+            <span>REQUIREMENT</span>
+            <span>APPLICABILITY</span>
+            <span>EFFECTIVE / EXPIRY</span>
+            <span>PROOF REQUIREMENT</span>
+          </div>
+          {certifications.map((item) => (
+            <div className="cert-row" key={item.name}>
+              <div className="cert-name">
+                <div className="cert-icon">
+                  <ShieldCheck size={16} />
+                </div>
+                <strong>{item.name}</strong>
+              </div>
+              <div>
+                <Badge
+                  tone={
+                    item.applicable === "Not indicated" ? "neutral" : "amber"
+                  }
+                  dot
+                >
+                  {item.applicable}
+                </Badge>
+              </div>
+              <span className="cert-detail">{item.effective}</span>
+              <span className="cert-detail">{item.proof}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="proof-clause">
+        <div className="proof-heading">
+          <div className="proof-icon">
+            <Clipboard size={17} />
+          </div>
+          <div>
+            <span className="panel-kicker">
+              DRAFT · OFFICER REVIEW REQUIRED
+            </span>
+            <h3>Proof clause</h3>
+          </div>
+          <button
+            className="icon-button"
+            onClick={() =>
+              navigator.clipboard?.writeText(
+                "The supplier shall provide documentary evidence of applicable certification, subject to verification by the procuring authority.",
+              )
+            }
+            title="Copy clause"
+          >
+            <Copy size={15} />
+          </button>
+        </div>
+        <p>
+          The supplier shall provide documentary evidence of applicable
+          certification, subject to verification by the procuring authority.
+          Applicable scheme, validity, and proof requirements must be confirmed
+          before issue.
+        </p>
+        <span className="clause-source">
+          Source: Sample certification panel · No live registry verification
+        </span>
+      </section>
+      <div className="page-actions">
+        <span>
+          <ShieldCheck size={15} />
+          Every applicability decision requires officer review.
+        </span>
+        <Button onClick={() => navigate("audit")}>
+          Run tender audit
+          <ArrowRight size={16} />
+        </Button>
+      </div>
+    </>
+  );
 }
 
 function AuditPage({ openGap, navigate }) {
   const [activeTab, setActiveTab] = useState("All decisions");
-  const items = [...audit.covered.map((item) => ({ ...item, covered: true })), ...audit.gaps.map((item) => ({ ...item, covered: false }))].filter((item) => activeTab === "All decisions" || (activeTab === "Covered" ? item.covered : !item.covered));
-  return <><PageHeading eyebrow="STEP 04 · CORE REVIEW" title="Tender audit" description="Identify specification gaps before procurement." right={<Badge tone="red" dot>Needs officer review</Badge>}/>
-    <section className="score-card"><div className="score-card-left"><div className="score-label">REQUIRED DECISIONS COVERED <span>ILLUSTRATIVE</span></div><div className="score-main"><AnimatedCount value={audit.coverage}/><i>/</i><span>17</span><div className="score-copy"><b>Coverage snapshot</b><span>Based on detected decisions in this sample</span></div></div><div className="score-bar"><motion.i initial={{ width: 0 }} animate={{ width: `${(audit.coverage / audit.total) * 100}%` }} transition={{ duration: 0.9, delay: 0.15 }}/></div><div className="score-legend"><span><i className="covered-dot"/>9 Covered</span><span><i className="missing-dot"/>8 Need attention</span><span className="illustrative-tag">Illustrative, not accuracy</span></div></div><div className="score-ring-wrap"><div className="score-ring"><svg viewBox="0 0 120 120"><circle className="ring-bg" cx="60" cy="60" r="48"/><motion.circle className="ring-progress" cx="60" cy="60" r="48" initial={{ strokeDashoffset: 302 }} animate={{ strokeDashoffset: 302 - (302 * audit.coverage / audit.total) }} transition={{ duration: 1.1, delay: 0.1 }}/></svg><div><strong>53<span>%</span></strong><small>DECISIONS</small></div></div></div><div className="score-watermark"><ShieldCheck size={105}/></div></section>
-    <div className="audit-insight-strip"><div className="insight-spark"><Sparkles size={17}/></div><span><strong>5 decision gaps detected.</strong> Resolve or acknowledge them before final approval.</span><button onClick={() => navigate("improved")}>View improved draft<ArrowRight size={14}/></button></div>
-    <div className="section-heading audit-list-heading"><div><div className="eyebrow">DECISION REGISTER</div><h2>Audit decisions</h2></div><div className="audit-tabs">{["All decisions", "Covered", "Needs attention"].map((tab) => <button key={tab} className={activeTab === tab ? "selected" : ""} onClick={() => setActiveTab(tab)}>{tab}</button>)}</div></div>
-    <div className="decision-list">{items.map((item, index) => <motion.button className={`decision-row ${item.covered ? "decision-covered" : "decision-gap"}`} key={item.title} onClick={() => item.covered ? openGap({ ...item, type: "Covered decision" }) : openGap(item)} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: Math.min(index * 0.045, 0.3) }}><div className="decision-status">{item.covered ? <Check size={15}/> : <CircleAlert size={16}/>}</div><div className="decision-copy"><strong>{item.title}</strong><span>{item.detail || item.why}</span></div><span className={`decision-type ${item.covered ? "type-covered" : ""}`}>{item.type}</span><span className="decision-clause">{item.clause || "Tender context"}</span><ChevronRight size={16} className="decision-chevron"/></motion.button>)}</div>
-    <div className="audit-foot"><span><CircleAlert size={14}/>Illustrative findings · validate against source tender and authoritative records.</span><Button variant="secondary" onClick={() => navigate("matrix")}>Open compliance matrix<ArrowRight size={15}/></Button></div></>;
+  const items = [
+    ...audit.covered.map((item) => ({ ...item, covered: true })),
+    ...audit.gaps.map((item) => ({ ...item, covered: false })),
+  ].filter(
+    (item) =>
+      activeTab === "All decisions" ||
+      (activeTab === "Covered" ? item.covered : !item.covered),
+  );
+  return (
+    <>
+      <PageHeading
+        eyebrow="STEP 04 · CORE REVIEW"
+        title="Tender audit"
+        description="Identify specification gaps before procurement."
+        right={
+          <Badge tone="red" dot>
+            Needs officer review
+          </Badge>
+        }
+      />
+      <section className="score-card">
+        <div className="score-card-left">
+          <div className="score-label">
+            REQUIRED DECISIONS COVERED <span>ILLUSTRATIVE</span>
+          </div>
+          <div className="score-main">
+            <AnimatedCount value={audit.coverage} />
+            <i>/</i>
+            <span>17</span>
+            <div className="score-copy">
+              <b>Coverage snapshot</b>
+              <span>Based on detected decisions in this sample</span>
+            </div>
+          </div>
+          <div className="score-bar">
+            <motion.i
+              initial={{ width: 0 }}
+              animate={{ width: `${(audit.coverage / audit.total) * 100}%` }}
+              transition={{ duration: 0.9, delay: 0.15 }}
+            />
+          </div>
+          <div className="score-legend">
+            <span>
+              <i className="covered-dot" />9 Covered
+            </span>
+            <span>
+              <i className="missing-dot" />8 Need attention
+            </span>
+            <span className="illustrative-tag">Illustrative, not accuracy</span>
+          </div>
+        </div>
+        <div className="score-ring-wrap">
+          <div className="score-ring">
+            <svg viewBox="0 0 120 120">
+              <circle className="ring-bg" cx="60" cy="60" r="48" />
+              <motion.circle
+                className="ring-progress"
+                cx="60"
+                cy="60"
+                r="48"
+                initial={{ strokeDashoffset: 302 }}
+                animate={{
+                  strokeDashoffset: 302 - (302 * audit.coverage) / audit.total,
+                }}
+                transition={{ duration: 1.1, delay: 0.1 }}
+              />
+            </svg>
+            <div>
+              <strong>
+                53<span>%</span>
+              </strong>
+              <small>DECISIONS</small>
+            </div>
+          </div>
+        </div>
+        <div className="score-watermark">
+          <ShieldCheck size={105} />
+        </div>
+      </section>
+      <div className="audit-insight-strip">
+        <div className="insight-spark">
+          <Sparkles size={17} />
+        </div>
+        <span>
+          <strong>5 decision gaps detected.</strong> Resolve or acknowledge them
+          before final approval.
+        </span>
+        <button onClick={() => navigate("improved")}>
+          View improved draft
+          <ArrowRight size={14} />
+        </button>
+      </div>
+      <div className="section-heading audit-list-heading">
+        <div>
+          <div className="eyebrow">DECISION REGISTER</div>
+          <h2>Audit decisions</h2>
+        </div>
+        <div className="audit-tabs">
+          {["All decisions", "Covered", "Needs attention"].map((tab) => (
+            <button
+              key={tab}
+              className={activeTab === tab ? "selected" : ""}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="decision-list">
+        {items.map((item, index) => (
+          <motion.button
+            className={`decision-row ${item.covered ? "decision-covered" : "decision-gap"}`}
+            key={item.title}
+            onClick={() =>
+              item.covered
+                ? openGap({ ...item, type: "Covered decision" })
+                : openGap(item)
+            }
+            initial={{ opacity: 0, x: -8 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: Math.min(index * 0.045, 0.3) }}
+          >
+            <div className="decision-status">
+              {item.covered ? <Check size={15} /> : <CircleAlert size={16} />}
+            </div>
+            <div className="decision-copy">
+              <strong>{item.title}</strong>
+              <span>{item.detail || item.why}</span>
+            </div>
+            <span
+              className={`decision-type ${item.covered ? "type-covered" : ""}`}
+            >
+              {item.type}
+            </span>
+            <span className="decision-clause">
+              {item.clause || "Tender context"}
+            </span>
+            <ChevronRight size={16} className="decision-chevron" />
+          </motion.button>
+        ))}
+      </div>
+      <div className="audit-foot">
+        <span>
+          <CircleAlert size={14} />
+          Illustrative findings · validate against source tender and
+          authoritative records.
+        </span>
+        <Button variant="secondary" onClick={() => navigate("matrix")}>
+          Open compliance matrix
+          <ArrowRight size={15} />
+        </Button>
+      </div>
+    </>
+  );
 }
 
-function MatrixPage({ rows, query, setQuery, status, setStatus, sort, setSort, openRow, navigate }) {
-  return <><PageHeading eyebrow="STEP 05 · TRACEABILITY" title="Compliance matrix" description="Inspect how each detected requirement maps to a standard and status." right={<Button variant="secondary" onClick={() => navigate("improved")}><Download size={15}/>Export preview</Button>}/>
-    <div className="matrix-toolbar"><label className="search-field"><Search size={16}/><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search requirements or standards"/><kbd>⌘ K</kbd></label><label className="select-field"><Filter size={14}/><select value={status} onChange={(event) => setStatus(event.target.value)}><option>All statuses</option><option>Covered</option><option>Needs attention</option></select><ChevronDown size={13}/></label><button className="select-field sort-button" onClick={() => setSort(sort === "Requirement" ? "Status" : "Requirement")}><ArrowLeftRight size={14}/>Sort: {sort}<ChevronDown size={13}/></button></div>
-    <div className="matrix-wrap"><table className="matrix-table"><thead><tr><th>REQUIREMENT</th><th>STANDARD</th><th>CLAUSE / SOURCE</th><th>STATUS</th><th></th></tr></thead><tbody>{rows.map((row, index) => <motion.tr key={`${row.title}-${index}`} onClick={() => openRow(row)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: index * 0.025 }}><td><div className="matrix-requirement"><span className={row.status === "Covered" ? "matrix-check" : "matrix-alert"}>{row.status === "Covered" ? <Check size={13}/> : <CircleAlert size={14}/>}</span><div><strong>{row.title}</strong><span>{row.type}</span></div></div></td><td><button className="matrix-standard" onClick={(event) => { event.stopPropagation(); openRow({ ...row, title: "Standard reference", detail: "IS XXXX · Sample registry data" }); }}>IS XXXX<ExternalLink size={12}/></button></td><td><span className="matrix-clause">{row.clause || "Tender context"}</span></td><td><Badge tone={row.status === "Covered" ? "green" : "red"} dot>{row.status}</Badge></td><td><ChevronRight size={15}/></td></motion.tr>)}</tbody></table>{rows.length === 0 && <EmptyLine>No matching requirements found. Try another search.</EmptyLine>}</div><div className="table-footer"><span>Showing <strong>{rows.length}</strong> of 8 sample decisions</span><span><ShieldCheck size={14}/>Sample data · Illustrative coverage</span></div>
-    <div className="page-actions"><span>All standard and clause identifiers shown here are placeholders.</span><Button onClick={() => navigate("improved")}>Review improved tender<ArrowRight size={16}/></Button></div></>;
+function MatrixPage({
+  rows,
+  query,
+  setQuery,
+  status,
+  setStatus,
+  sort,
+  setSort,
+  openRow,
+  navigate,
+}) {
+  return (
+    <>
+      <PageHeading
+        eyebrow="STEP 05 · TRACEABILITY"
+        title="Compliance matrix"
+        description="Inspect how each detected requirement maps to a standard and status."
+        right={
+          <Button variant="secondary" onClick={() => navigate("improved")}>
+            <Download size={15} />
+            Export preview
+          </Button>
+        }
+      />
+      <div className="matrix-toolbar">
+        <label className="search-field">
+          <Search size={16} />
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search requirements or standards"
+          />
+          <kbd>⌘ K</kbd>
+        </label>
+        <label className="select-field">
+          <Filter size={14} />
+          <select
+            value={status}
+            onChange={(event) => setStatus(event.target.value)}
+          >
+            <option>All statuses</option>
+            <option>Covered</option>
+            <option>Needs attention</option>
+          </select>
+          <ChevronDown size={13} />
+        </label>
+        <button
+          className="select-field sort-button"
+          onClick={() =>
+            setSort(sort === "Requirement" ? "Status" : "Requirement")
+          }
+        >
+          <ArrowLeftRight size={14} />
+          Sort: {sort}
+          <ChevronDown size={13} />
+        </button>
+      </div>
+      <div className="matrix-wrap">
+        <table className="matrix-table">
+          <thead>
+            <tr>
+              <th>REQUIREMENT</th>
+              <th>STANDARD</th>
+              <th>CLAUSE / SOURCE</th>
+              <th>STATUS</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, index) => (
+              <motion.tr
+                key={`${row.title}-${index}`}
+                onClick={() => openRow(row)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: index * 0.025 }}
+              >
+                <td>
+                  <div className="matrix-requirement">
+                    <span
+                      className={
+                        row.status === "Covered"
+                          ? "matrix-check"
+                          : "matrix-alert"
+                      }
+                    >
+                      {row.status === "Covered" ? (
+                        <Check size={13} />
+                      ) : (
+                        <CircleAlert size={14} />
+                      )}
+                    </span>
+                    <div>
+                      <strong>{row.title}</strong>
+                      <span>{row.type}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <button
+                    className="matrix-standard"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      openRow({
+                        ...row,
+                        title: "Standard reference",
+                        detail: "IS XXXX · Sample registry data",
+                      });
+                    }}
+                  >
+                    IS XXXX
+                    <ExternalLink size={12} />
+                  </button>
+                </td>
+                <td>
+                  <span className="matrix-clause">
+                    {row.clause || "Tender context"}
+                  </span>
+                </td>
+                <td>
+                  <Badge tone={row.status === "Covered" ? "green" : "red"} dot>
+                    {row.status}
+                  </Badge>
+                </td>
+                <td>
+                  <ChevronRight size={15} />
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+        {rows.length === 0 && (
+          <EmptyLine>
+            No matching requirements found. Try another search.
+          </EmptyLine>
+        )}
+      </div>
+      <div className="table-footer">
+        <span>
+          Showing <strong>{rows.length}</strong> of 8 sample decisions
+        </span>
+        <span>
+          <ShieldCheck size={14} />
+          Sample data · Illustrative coverage
+        </span>
+      </div>
+      <div className="page-actions">
+        <span>
+          All standard and clause identifiers shown here are placeholders.
+        </span>
+        <Button onClick={() => navigate("improved")}>
+          Review improved tender
+          <ArrowRight size={16} />
+        </Button>
+      </div>
+    </>
+  );
 }
 
-function ImprovedPage({ tender, addedGaps, copyText, copied, openStandard, notify, navigate }) {
+function ImprovedPage({
+  tender,
+  addedGaps,
+  copyText,
+  copied,
+  openStandard,
+  notify,
+  navigate,
+}) {
   const improved = `Supply of LED lamps. The procuring authority shall specify the applicable Indian Standard and edition after officer review.${addedGaps.length ? `\n\n${addedGaps.map((item) => item.suggestion).join("\n\n")}` : "\n\nSuggested acceptance criteria and test method to be confirmed by the procuring authority before issue."}`;
-  return <><PageHeading eyebrow="STEP 06 · DRAFTING" title="Improved tender specification" description="Review a suggested draft with traceable additions. Nothing is issued automatically." right={<Badge tone="amber" dot>Draft · Needs review</Badge>}/>
-    <div className="diff-toolbar"><div className="diff-legend"><span><i className="diff-original-dot"/>Original text</span><span><i className="diff-added-dot"/>Suggested addition</span></div><span><ShieldCheck size={14}/>Officer controls final wording</span></div><div className="diff-grid"><section className="diff-panel diff-before"><div className="diff-panel-head"><div><span className="panel-kicker">SOURCE</span><h3>Original tender</h3></div><Badge>Unchanged</Badge></div><p className="diff-text">{(tender || tenderText).split("good quality").map((part, index, array) => <span key={`${part}-${index}`}>{part}{index < array.length - 1 && <mark className="diff-ambiguous">good quality</mark>}</span>)}</p><div className="diff-panel-footer"><FileText size={14}/>Tender extract · Sample</div></section><div className="diff-arrow"><ArrowRight size={17}/></div><section className="diff-panel diff-after"><div className="diff-panel-head"><div><span className="panel-kicker">SUGGESTED OUTPUT</span><h3>Improved draft</h3></div><Badge tone="blue"><Sparkles size={12}/>Illustrative</Badge></div><div className="improved-text"><p>Supply of LED lamps. <mark>The procuring authority shall specify the applicable Indian Standard and edition after officer review.</mark></p>{addedGaps.length ? addedGaps.map((item) => <div className="added-clause" key={item.title}><p>{item.suggestion}</p><button className="source-indicator" onClick={() => openStandard(standards[0])}>Source: IS XXXX · Clause X.X<ExternalLink size={11}/></button></div>) : <div className="added-clause"><p>Suggested acceptance criteria and test method to be confirmed by the procuring authority before issue.</p><button className="source-indicator" onClick={() => openStandard(standards[1])}>Source: IS XXXX · Clause X.X<ExternalLink size={11}/></button></div>}</div><div className="diff-panel-footer"><Sparkles size={14}/>Suggested language · {addedGaps.length || 1} clause{(addedGaps.length || 1) === 1 ? "" : "s"} added</div></section></div>
-    <div className="draft-note"><CircleAlert size={15}/><span>All clauses are illustrative placeholders. Verify standard applicability, clause references, and procurement language before use.</span></div><div className="page-actions"><span>{addedGaps.length} audit gap{addedGaps.length === 1 ? "" : "s"} incorporated from this session.</span><div className="action-group"><Button variant="secondary" onClick={() => copyText(improved)}>{copied ? <Check size={15}/> : <Copy size={15}/ >}{copied ? "Copied" : "Copy improved tender"}</Button><Button variant="secondary" onClick={() => notify("Export preview prepared · demo only")}><Download size={15}/>Export preview</Button><Button onClick={() => navigate("approval")}>Continue to review<ArrowRight size={16}/></Button></div></div></>;
+  return (
+    <>
+      <PageHeading
+        eyebrow="STEP 06 · DRAFTING"
+        title="Improved tender specification"
+        description="Review a suggested draft with traceable additions. Nothing is issued automatically."
+        right={
+          <Badge tone="amber" dot>
+            Draft · Needs review
+          </Badge>
+        }
+      />
+      <div className="diff-toolbar">
+        <div className="diff-legend">
+          <span>
+            <i className="diff-original-dot" />
+            Original text
+          </span>
+          <span>
+            <i className="diff-added-dot" />
+            Suggested addition
+          </span>
+        </div>
+        <span>
+          <ShieldCheck size={14} />
+          Officer controls final wording
+        </span>
+      </div>
+      <div className="diff-grid">
+        <section className="diff-panel diff-before">
+          <div className="diff-panel-head">
+            <div>
+              <span className="panel-kicker">SOURCE</span>
+              <h3>Original tender</h3>
+            </div>
+            <Badge>Unchanged</Badge>
+          </div>
+          <p className="diff-text">
+            {(tender || tenderText)
+              .split("good quality")
+              .map((part, index, array) => (
+                <span key={`${part}-${index}`}>
+                  {part}
+                  {index < array.length - 1 && (
+                    <mark className="diff-ambiguous">good quality</mark>
+                  )}
+                </span>
+              ))}
+          </p>
+          <div className="diff-panel-footer">
+            <FileText size={14} />
+            Tender extract · Sample
+          </div>
+        </section>
+        <div className="diff-arrow">
+          <ArrowRight size={17} />
+        </div>
+        <section className="diff-panel diff-after">
+          <div className="diff-panel-head">
+            <div>
+              <span className="panel-kicker">SUGGESTED OUTPUT</span>
+              <h3>Improved draft</h3>
+            </div>
+            <Badge tone="blue">
+              <Sparkles size={12} />
+              Illustrative
+            </Badge>
+          </div>
+          <div className="improved-text">
+            <p>
+              Supply of LED lamps.{" "}
+              <mark>
+                The procuring authority shall specify the applicable Indian
+                Standard and edition after officer review.
+              </mark>
+            </p>
+            {addedGaps.length ? (
+              addedGaps.map((item) => (
+                <div className="added-clause" key={item.title}>
+                  <p>{item.suggestion}</p>
+                  <button
+                    className="source-indicator"
+                    onClick={() => openStandard(standards[0])}
+                  >
+                    Source: IS XXXX · Clause X.X
+                    <ExternalLink size={11} />
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div className="added-clause">
+                <p>
+                  Suggested acceptance criteria and test method to be confirmed
+                  by the procuring authority before issue.
+                </p>
+                <button
+                  className="source-indicator"
+                  onClick={() => openStandard(standards[1])}
+                >
+                  Source: IS XXXX · Clause X.X
+                  <ExternalLink size={11} />
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="diff-panel-footer">
+            <Sparkles size={14} />
+            Suggested language · {addedGaps.length || 1} clause
+            {(addedGaps.length || 1) === 1 ? "" : "s"} added
+          </div>
+        </section>
+      </div>
+      <div className="draft-note">
+        <CircleAlert size={15} />
+        <span>
+          All clauses are illustrative placeholders. Verify standard
+          applicability, clause references, and procurement language before use.
+        </span>
+      </div>
+      <div className="page-actions">
+        <span>
+          {addedGaps.length} audit gap{addedGaps.length === 1 ? "" : "s"}{" "}
+          incorporated from this session.
+        </span>
+        <div className="action-group">
+          <Button variant="secondary" onClick={() => copyText(improved)}>
+            {copied ? <Check size={15} /> : <Copy size={15} />}
+            {copied ? "Copied" : "Copy improved tender"}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => notify("Export preview prepared · demo only")}
+          >
+            <Download size={15} />
+            Export preview
+          </Button>
+          <Button onClick={() => navigate("approval")}>
+            Continue to review
+            <ArrowRight size={16} />
+          </Button>
+        </div>
+      </div>
+    </>
+  );
 }
 
 function ApprovalPage({ approved, setApprovalOpen, navigate }) {
-  return <><PageHeading eyebrow="STEP 07 · HUMAN APPROVAL" title="Final review" description="Confirm the audit record and its unresolved items before approval." right={<Badge tone={approved ? "green" : "amber"} dot>{approved ? "Approved · Demo" : "Awaiting officer"}</Badge>}/>
-    <div className="review-summary"><div className="review-summary-head"><div><div className="eyebrow">AUDIT SUMMARY</div><h2>LED Lighting Procurement</h2><span>TDR-0248 <i/> Registry snapshot · 30 Sep 2026</span></div><div className="summary-score"><strong>9 <i>/</i> 17</strong><span>Illustrative coverage</span></div></div><div className="summary-metrics"><div><span>WARNINGS</span><strong className="warning-number">5</strong><small>Decision gaps detected</small></div><div><span>UNRESOLVED</span><strong>2</strong><small>Need officer decision</small></div><div><span>STANDARDS</span><strong>4</strong><small>Sample references</small></div><div><span>REVIEW STATUS</span><strong className="status-review">{approved ? "Approved" : "Pending"}</strong><small>{approved ? "Recorded locally" : "Awaiting approval"}</small></div></div></div>
-    <section className={`approval-panel ${approved ? "approval-complete" : ""}`}>{approved ? <div className="success-state"><div className="success-check"><Check size={28}/></div><div><div className="eyebrow">LOCAL DEMO STATE</div><h2>Audit approved</h2><p>The approval has been added to this browser session&apos;s sample audit log.</p></div><button className="text-button" onClick={() => navigate("home")}>Return to overview<ArrowRight size={14}/></button></div> : <><div className="approval-seal"><ShieldCheck size={26}/></div><div className="approval-copy"><span className="panel-kicker">OFFICER DECISION</span><h3>Ready for your review</h3><p>Recommendations and audit results support officer review. The officer approves every output.</p></div><Button onClick={() => setApprovalOpen(true)}>Approve audit<Check size={16}/></Button></>}</section>
-    <section className="log-section"><div className="section-heading"><div><div className="eyebrow">LOCAL SESSION RECORD</div><h2>Audit log</h2></div><Badge><History size={12}/>This session only</Badge></div><div className="audit-log-table"><div className="log-head"><span>TIME</span><span>OFFICER</span><span>ACTION</span><span>REGISTRY DATE</span><span>WARNINGS</span></div>{approved && <div className="log-row log-new"><span>Just now</span><span>A. Sharma</span><span><Badge tone="green" dot>Audit approved</Badge></span><span>30 Sep 2026</span><span>5 acknowledged</span></div>}<div className="log-row"><span>10:42 AM</span><span>A. Sharma</span><span><Badge tone="blue" dot>Audit created</Badge></span><span>30 Sep 2026</span><span>5 detected</span></div><div className="log-row"><span>10:43 AM</span><span>SpecAudit · Demo</span><span><Badge dot>Review prepared</Badge></span><span>30 Sep 2026</span><span>2 unresolved</span></div></div><div className="log-disclaimer"><CircleAlert size={14}/>Local mock log. No official record is created.</div></section></>;
+  return (
+    <>
+      <PageHeading
+        eyebrow="STEP 07 · HUMAN APPROVAL"
+        title="Final review"
+        description="Confirm the audit record and its unresolved items before approval."
+        right={
+          <Badge tone={approved ? "green" : "amber"} dot>
+            {approved ? "Approved · Demo" : "Awaiting officer"}
+          </Badge>
+        }
+      />
+      <div className="review-summary">
+        <div className="review-summary-head">
+          <div>
+            <div className="eyebrow">AUDIT SUMMARY</div>
+            <h2>LED Lighting Procurement</h2>
+            <span>
+              TDR-0248 <i /> Registry snapshot · 30 Sep 2026
+            </span>
+          </div>
+          <div className="summary-score">
+            <strong>
+              9 <i>/</i> 17
+            </strong>
+            <span>Illustrative coverage</span>
+          </div>
+        </div>
+        <div className="summary-metrics">
+          <div>
+            <span>WARNINGS</span>
+            <strong className="warning-number">5</strong>
+            <small>Decision gaps detected</small>
+          </div>
+          <div>
+            <span>UNRESOLVED</span>
+            <strong>2</strong>
+            <small>Need officer decision</small>
+          </div>
+          <div>
+            <span>STANDARDS</span>
+            <strong>4</strong>
+            <small>Sample references</small>
+          </div>
+          <div>
+            <span>REVIEW STATUS</span>
+            <strong className="status-review">
+              {approved ? "Approved" : "Pending"}
+            </strong>
+            <small>{approved ? "Recorded locally" : "Awaiting approval"}</small>
+          </div>
+        </div>
+      </div>
+      <section
+        className={`approval-panel ${approved ? "approval-complete" : ""}`}
+      >
+        {approved ? (
+          <div className="success-state">
+            <div className="success-check">
+              <Check size={28} />
+            </div>
+            <div>
+              <div className="eyebrow">LOCAL DEMO STATE</div>
+              <h2>Audit approved</h2>
+              <p>
+                The approval has been added to this browser session&apos;s
+                sample audit log.
+              </p>
+            </div>
+            <button className="text-button" onClick={() => navigate("home")}>
+              Return to overview
+              <ArrowRight size={14} />
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="approval-seal">
+              <ShieldCheck size={26} />
+            </div>
+            <div className="approval-copy">
+              <span className="panel-kicker">OFFICER DECISION</span>
+              <h3>Ready for your review</h3>
+              <p>
+                Recommendations and audit results support officer review. The
+                officer approves every output.
+              </p>
+            </div>
+            <Button onClick={() => setApprovalOpen(true)}>
+              Approve audit
+              <Check size={16} />
+            </Button>
+          </>
+        )}
+      </section>
+      <section className="log-section">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow">LOCAL SESSION RECORD</div>
+            <h2>Audit log</h2>
+          </div>
+          <Badge>
+            <History size={12} />
+            This session only
+          </Badge>
+        </div>
+        <div className="audit-log-table">
+          <div className="log-head">
+            <span>TIME</span>
+            <span>OFFICER</span>
+            <span>ACTION</span>
+            <span>REGISTRY DATE</span>
+            <span>WARNINGS</span>
+          </div>
+          {approved && (
+            <div className="log-row log-new">
+              <span>Just now</span>
+              <span>A. Sharma</span>
+              <span>
+                <Badge tone="green" dot>
+                  Audit approved
+                </Badge>
+              </span>
+              <span>30 Sep 2026</span>
+              <span>5 acknowledged</span>
+            </div>
+          )}
+          <div className="log-row">
+            <span>10:42 AM</span>
+            <span>A. Sharma</span>
+            <span>
+              <Badge tone="blue" dot>
+                Audit created
+              </Badge>
+            </span>
+            <span>30 Sep 2026</span>
+            <span>5 detected</span>
+          </div>
+          <div className="log-row">
+            <span>10:43 AM</span>
+            <span>SpecAudit · Demo</span>
+            <span>
+              <Badge dot>Review prepared</Badge>
+            </span>
+            <span>30 Sep 2026</span>
+            <span>2 unresolved</span>
+          </div>
+        </div>
+        <div className="log-disclaimer">
+          <CircleAlert size={14} />
+          Local mock log. No official record is created.
+        </div>
+      </section>
+    </>
+  );
 }
 
-function ToolsPage({ toolTab, setToolTab, openStandard, registryInput, setRegistryInput, registryChecked, setRegistryChecked, wizardStep, setWizardStep, selectedProduct, setSelectedProduct, openGap, navigate, notify }) {
-  const tools = ["Wording flags", "IS checker", "Combination check", "Guided questions", "Change alerts"];
+function ToolsPage({
+  toolTab,
+  setToolTab,
+  openStandard,
+  registryInput,
+  setRegistryInput,
+  registryChecked,
+  setRegistryChecked,
+  wizardStep,
+  setWizardStep,
+  selectedProduct,
+  setSelectedProduct,
+  openGap,
+  navigate,
+  notify,
+}) {
+  const tools = [
+    "Wording flags",
+    "IS checker",
+    "Combination check",
+    "Guided questions",
+    "Change alerts",
+  ];
   const toolIcons = [FileSearch, BookOpen, ArrowLeftRight, Sparkles, Bell];
-  const questionOptions = ["LED lamp", "Industrial equipment", "Electrical appliance", "Other", "I don't know"];
-  const [checkedStandards, setCheckedStandards] = useState(standards.slice(0, 3).map((item) => item.id));
-  return <><PageHeading eyebrow="RESOURCE DESK" title="More tools" description="Small utilities to support a first-pass review. All results use local sample data."/>
-    <div className="tools-layout"><nav className="tool-nav">{tools.map((tool, index) => { const Icon = toolIcons[index]; return <button className={toolTab === tool ? "selected" : ""} onClick={() => setToolTab(tool)} key={tool}><span><Icon size={16}/></span>{tool}<ChevronRight size={14}/></button>; })}</nav><div className="tool-content">
-      {toolTab === "Wording flags" && <div className="tool-pane"><div className="tool-pane-heading"><span className="tool-icon"><FileSearch size={18}/></span><div><h2>Wording flags</h2><p>Subjective and unresolved phrases detected in the tender extract.</p></div></div><div className="wording-document"><span className="panel-kicker">SAMPLE TENDER EXTRACT</span><p>Supply of LED lamps, <button className="wording-highlight" onClick={() => openGap({ title: "Non-measurable wording", quote: "good quality", why: "The phrase does not define measurable performance or an acceptance threshold." })}>good quality</button>, conforming to <button className="wording-highlight blue" onClick={() => openGap({ title: "Unresolved reference", quote: "relevant IS", why: "No specific standard or edition is named, so the reference cannot be verified." })}>relevant IS</button>.</p><div className="wording-summary"><span><i/>2 phrases need review</span><span>Click a highlight to inspect</span></div></div><div className="tool-tip-note"><Lightbulb size={15}/>A wording flag is a prompt for human review, not a compliance finding.</div></div>}
-      {toolTab === "IS checker" && <div className="tool-pane"><div className="tool-pane-heading"><span className="tool-icon"><BookOpen size={18}/></span><div><h2>IS checker</h2><p>Check a placeholder number against the sample registry.</p></div></div><label className="registry-input-label">STANDARD IDENTIFIER<div className="registry-input"><input value={registryInput} onChange={(event) => { setRegistryInput(event.target.value); setRegistryChecked(false); }} placeholder="IS XXXX"/><Button onClick={() => setRegistryChecked(true)}>Check registry<ArrowRight size={14}/></Button></div></label>{registryChecked && <div className="registry-result"><div className="result-icon"><CircleAlert size={18}/></div><div><strong>Not found in registry — cannot verify</strong><p>This prototype has no live BIS connection. Do not infer status from this result.</p><span>Successor <b>Cannot verify</b><i/>Closest alternative <b>Cannot verify</b></span></div></div>}<div className="tool-tip-note"><ShieldCheck size={15}/>Registry lookup is simulated. No external API is called.</div></div>}
-      {toolTab === "Combination check" && <div className="tool-pane"><div className="tool-pane-heading"><span className="tool-icon"><ArrowLeftRight size={18}/></span><div><h2>Combination check</h2><p>Select sample references to review for obvious clashes.</p></div></div><div className="combination-subhead"><span>STANDARDS CHECKED</span><strong>{checkedStandards.length} selected</strong></div><div className="combination-list">{standards.map((item, index) => { const selected = checkedStandards.includes(item.id); return <div key={item.id}><span className="combo-index">0{index + 1}</span><button className={`combination-toggle ${selected ? "checked" : ""}`} onClick={() => setCheckedStandards((current) => selected ? current.filter((id) => id !== item.id) : [...current, item.id])} aria-pressed={selected}><span className="combo-check">{selected && <Check size={11}/>}</span><strong>{item.code}</strong><span>{item.type}</span><small>{selected ? "Selected" : "Add"}</small></button><button className="icon-button" aria-label={`Open ${item.type} standard`} onClick={() => openStandard(item)}><ChevronRight size={14}/></button></div>; })}</div><div className={`combination-result ${checkedStandards.length < 2 ? "combination-pending" : ""}`}><div>{checkedStandards.length < 2 ? <CircleAlert size={17}/> : <CircleCheck size={17}/>}<strong>{checkedStandards.length < 2 ? "Select at least two standards" : "No clash found in items checked"}</strong></div><span>{checkedStandards.length < 2 ? "A comparison needs two or more selected references." : "Illustrative check only · not a compatibility determination"}</span></div><Button variant="secondary" disabled={checkedStandards.length < 2} onClick={() => notify("Sample combination checked")}>Run check<ArrowLeftRight size={14}/></Button></div>}
-      {toolTab === "Guided questions" && <div className="tool-pane wizard-pane"><div className="wizard-progress"><span>QUESTION {String(wizardStep + 1).padStart(2, "0")} <i/> 02</span><div><i style={{ width: wizardStep ? "100%" : "50%" }}/></div></div><AnimatePresence mode="wait"><motion.div key={wizardStep} className="wizard-question" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }}><div className="tool-pane-heading"><span className="tool-icon"><Sparkles size={18}/></span><div><h2>{wizardStep === 0 ? "What product is being procured?" : "What matters most for this purchase?"}</h2><p>{wizardStep === 0 ? "Choose the closest match to begin." : `Product selected: ${selectedProduct || "Not specified"}`}</p></div></div><div className="wizard-options">{(wizardStep === 0 ? questionOptions : ["Safety evidence", "Performance testing", "Installation requirements", "I don't know"]).map((option) => <button key={option} onClick={() => { if (wizardStep === 0) { setSelectedProduct(option); setWizardStep(1); } else { notify(`Added review prompt: ${option}`); setWizardStep(0); } }}><span className="wizard-radio"/>{option}<ArrowRight size={14}/></button>)}</div></motion.div></AnimatePresence><div className="wizard-footer"><span><ShieldCheck size={14}/>Guided prompts are not recommendations</span><button onClick={() => { setWizardStep(0); setSelectedProduct(""); }}>Start over</button></div></div>}
-      {toolTab === "Change alerts" && <div className="tool-pane"><div className="tool-pane-heading"><span className="tool-icon"><Bell size={18}/></span><div><h2>Change alerts</h2><p>Sample notifications for saved tender references.</p></div></div><div className="alerts-list">{alerts.map((item, index) => <div className="alert-card" key={item.tender}><div className="alert-card-icon"><History size={16}/></div><div className="alert-card-body"><div className="alert-card-title"><strong>Standard update detected</strong><span>{item.date}</span></div><p>{item.message}</p><div className="alert-meta"><span>{item.tender}</span><i/> {item.standard}</div></div><button className="text-button" onClick={() => navigate("standards")}>Review<ArrowRight size={13}/></button></div>)}</div><div className="tool-tip-note"><CircleAlert size={15}/>Change data is illustrative and not monitored live.</div></div>}
-    </div></div></>;
+  const questionOptions = [
+    "LED lamp",
+    "Industrial equipment",
+    "Electrical appliance",
+    "Other",
+    "I don't know",
+  ];
+  const [checkedStandards, setCheckedStandards] = useState(
+    standards.slice(0, 3).map((item) => item.id),
+  );
+  return (
+    <>
+      <PageHeading
+        eyebrow="RESOURCE DESK"
+        title="More tools"
+        description="Small utilities to support a first-pass review. All results use local sample data."
+      />
+      <div className="tools-layout">
+        <nav className="tool-nav">
+          {tools.map((tool, index) => {
+            const Icon = toolIcons[index];
+            return (
+              <button
+                className={toolTab === tool ? "selected" : ""}
+                onClick={() => setToolTab(tool)}
+                key={tool}
+              >
+                <span>
+                  <Icon size={16} />
+                </span>
+                {tool}
+                <ChevronRight size={14} />
+              </button>
+            );
+          })}
+        </nav>
+        <div className="tool-content">
+          {toolTab === "Wording flags" && (
+            <div className="tool-pane">
+              <div className="tool-pane-heading">
+                <span className="tool-icon">
+                  <FileSearch size={18} />
+                </span>
+                <div>
+                  <h2>Wording flags</h2>
+                  <p>
+                    Subjective and unresolved phrases detected in the tender
+                    extract.
+                  </p>
+                </div>
+              </div>
+              <div className="wording-document">
+                <span className="panel-kicker">SAMPLE TENDER EXTRACT</span>
+                <p>
+                  Supply of LED lamps,{" "}
+                  <button
+                    className="wording-highlight"
+                    onClick={() =>
+                      openGap({
+                        title: "Non-measurable wording",
+                        quote: "good quality",
+                        why: "The phrase does not define measurable performance or an acceptance threshold.",
+                      })
+                    }
+                  >
+                    good quality
+                  </button>
+                  , conforming to{" "}
+                  <button
+                    className="wording-highlight blue"
+                    onClick={() =>
+                      openGap({
+                        title: "Unresolved reference",
+                        quote: "relevant IS",
+                        why: "No specific standard or edition is named, so the reference cannot be verified.",
+                      })
+                    }
+                  >
+                    relevant IS
+                  </button>
+                  .
+                </p>
+                <div className="wording-summary">
+                  <span>
+                    <i />2 phrases need review
+                  </span>
+                  <span>Click a highlight to inspect</span>
+                </div>
+              </div>
+              <div className="tool-tip-note">
+                <Lightbulb size={15} />A wording flag is a prompt for human
+                review, not a compliance finding.
+              </div>
+            </div>
+          )}
+          {toolTab === "IS checker" && (
+            <div className="tool-pane">
+              <div className="tool-pane-heading">
+                <span className="tool-icon">
+                  <BookOpen size={18} />
+                </span>
+                <div>
+                  <h2>IS checker</h2>
+                  <p>Check a placeholder number against the sample registry.</p>
+                </div>
+              </div>
+              <label className="registry-input-label">
+                STANDARD IDENTIFIER
+                <div className="registry-input">
+                  <input
+                    value={registryInput}
+                    onChange={(event) => {
+                      setRegistryInput(event.target.value);
+                      setRegistryChecked(false);
+                    }}
+                    placeholder="IS XXXX"
+                  />
+                  <Button onClick={() => setRegistryChecked(true)}>
+                    Check registry
+                    <ArrowRight size={14} />
+                  </Button>
+                </div>
+              </label>
+              {registryChecked && (
+                <div className="registry-result">
+                  <div className="result-icon">
+                    <CircleAlert size={18} />
+                  </div>
+                  <div>
+                    <strong>Not found in registry — cannot verify</strong>
+                    <p>
+                      This prototype has no live BIS connection. Do not infer
+                      status from this result.
+                    </p>
+                    <span>
+                      Successor <b>Cannot verify</b>
+                      <i />
+                      Closest alternative <b>Cannot verify</b>
+                    </span>
+                  </div>
+                </div>
+              )}
+              <div className="tool-tip-note">
+                <ShieldCheck size={15} />
+                Registry lookup is simulated. No external API is called.
+              </div>
+            </div>
+          )}
+          {toolTab === "Combination check" && (
+            <div className="tool-pane">
+              <div className="tool-pane-heading">
+                <span className="tool-icon">
+                  <ArrowLeftRight size={18} />
+                </span>
+                <div>
+                  <h2>Combination check</h2>
+                  <p>Select sample references to review for obvious clashes.</p>
+                </div>
+              </div>
+              <div className="combination-subhead">
+                <span>STANDARDS CHECKED</span>
+                <strong>{checkedStandards.length} selected</strong>
+              </div>
+              <div className="combination-list">
+                {standards.map((item, index) => {
+                  const selected = checkedStandards.includes(item.id);
+                  return (
+                    <div key={item.id}>
+                      <span className="combo-index">0{index + 1}</span>
+                      <button
+                        className={`combination-toggle ${selected ? "checked" : ""}`}
+                        onClick={() =>
+                          setCheckedStandards((current) =>
+                            selected
+                              ? current.filter((id) => id !== item.id)
+                              : [...current, item.id],
+                          )
+                        }
+                        aria-pressed={selected}
+                      >
+                        <span className="combo-check">
+                          {selected && <Check size={11} />}
+                        </span>
+                        <strong>{item.code}</strong>
+                        <span>{item.type}</span>
+                        <small>{selected ? "Selected" : "Add"}</small>
+                      </button>
+                      <button
+                        className="icon-button"
+                        aria-label={`Open ${item.type} standard`}
+                        onClick={() => openStandard(item)}
+                      >
+                        <ChevronRight size={14} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+              <div
+                className={`combination-result ${checkedStandards.length < 2 ? "combination-pending" : ""}`}
+              >
+                <div>
+                  {checkedStandards.length < 2 ? (
+                    <CircleAlert size={17} />
+                  ) : (
+                    <CircleCheck size={17} />
+                  )}
+                  <strong>
+                    {checkedStandards.length < 2
+                      ? "Select at least two standards"
+                      : "No clash found in items checked"}
+                  </strong>
+                </div>
+                <span>
+                  {checkedStandards.length < 2
+                    ? "A comparison needs two or more selected references."
+                    : "Illustrative check only · not a compatibility determination"}
+                </span>
+              </div>
+              <Button
+                variant="secondary"
+                disabled={checkedStandards.length < 2}
+                onClick={() => notify("Sample combination checked")}
+              >
+                Run check
+                <ArrowLeftRight size={14} />
+              </Button>
+            </div>
+          )}
+          {toolTab === "Guided questions" && (
+            <div className="tool-pane wizard-pane">
+              <div className="wizard-progress">
+                <span>
+                  QUESTION {String(wizardStep + 1).padStart(2, "0")} <i /> 02
+                </span>
+                <div>
+                  <i style={{ width: wizardStep ? "100%" : "50%" }} />
+                </div>
+              </div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={wizardStep}
+                  className="wizard-question"
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                >
+                  <div className="tool-pane-heading">
+                    <span className="tool-icon">
+                      <Sparkles size={18} />
+                    </span>
+                    <div>
+                      <h2>
+                        {wizardStep === 0
+                          ? "What product is being procured?"
+                          : "What matters most for this purchase?"}
+                      </h2>
+                      <p>
+                        {wizardStep === 0
+                          ? "Choose the closest match to begin."
+                          : `Product selected: ${selectedProduct || "Not specified"}`}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="wizard-options">
+                    {(wizardStep === 0
+                      ? questionOptions
+                      : [
+                          "Safety evidence",
+                          "Performance testing",
+                          "Installation requirements",
+                          "I don't know",
+                        ]
+                    ).map((option) => (
+                      <button
+                        key={option}
+                        onClick={() => {
+                          if (wizardStep === 0) {
+                            setSelectedProduct(option);
+                            setWizardStep(1);
+                          } else {
+                            notify(`Added review prompt: ${option}`);
+                            setWizardStep(0);
+                          }
+                        }}
+                      >
+                        <span className="wizard-radio" />
+                        {option}
+                        <ArrowRight size={14} />
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+              <div className="wizard-footer">
+                <span>
+                  <ShieldCheck size={14} />
+                  Guided prompts are not recommendations
+                </span>
+                <button
+                  onClick={() => {
+                    setWizardStep(0);
+                    setSelectedProduct("");
+                  }}
+                >
+                  Start over
+                </button>
+              </div>
+            </div>
+          )}
+          {toolTab === "Change alerts" && (
+            <div className="tool-pane">
+              <div className="tool-pane-heading">
+                <span className="tool-icon">
+                  <Bell size={18} />
+                </span>
+                <div>
+                  <h2>Change alerts</h2>
+                  <p>Sample notifications for saved tender references.</p>
+                </div>
+              </div>
+              <div className="alerts-list">
+                {alerts.map((item, index) => (
+                  <div className="alert-card" key={item.tender}>
+                    <div className="alert-card-icon">
+                      <History size={16} />
+                    </div>
+                    <div className="alert-card-body">
+                      <div className="alert-card-title">
+                        <strong>Standard update detected</strong>
+                        <span>{item.date}</span>
+                      </div>
+                      <p>{item.message}</p>
+                      <div className="alert-meta">
+                        <span>{item.tender}</span>
+                        <i /> {item.standard}
+                      </div>
+                    </div>
+                    <button
+                      className="text-button"
+                      onClick={() => navigate("standards")}
+                    >
+                      Review
+                      <ArrowRight size={13} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className="tool-tip-note">
+                <CircleAlert size={15} />
+                Change data is illustrative and not monitored live.
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
 }
 
 function AboutPage() {
   const sections = [
-    ["What this prototype demonstrates", "A guided path from tender text to extracted requirements, recommended standards, version checks, audit gaps, an improved draft, and officer approval."],
-    ["What is simulated", "All tender records, standard identifiers, registry states, version history, certification checks, audit coverage, and change alerts are local illustrative data. No file processing or external calls occur."],
-    ["What would connect to BIS in production", "An authorized, maintained registry source and verified historical records would be required. This demo has no BIS API access and cannot verify a standard, clause, or current status."],
-    ["Pilot scope", "A production pilot should define a limited product category, validated source documents, traceable evaluation criteria, security controls, and a review process with procurement officers."],
+    [
+      "What this prototype demonstrates",
+      "A guided path from tender text to extracted requirements, recommended standards, version checks, audit gaps, an improved draft, and officer approval.",
+    ],
+    [
+      "What is simulated",
+      "All tender records, standard identifiers, registry states, version history, certification checks, audit coverage, and change alerts are local illustrative data. No file processing or external calls occur.",
+    ],
+    [
+      "What would connect to BIS in production",
+      "An authorized, maintained registry source and verified historical records would be required. This demo has no BIS API access and cannot verify a standard, clause, or current status.",
+    ],
+    [
+      "Pilot scope",
+      "A production pilot should define a limited product category, validated source documents, traceable evaluation criteria, security controls, and a review process with procurement officers.",
+    ],
   ];
-  return <><PageHeading eyebrow="PRODUCT NOTES" title="About & limits" description="A transparent view of what this demonstration can and cannot tell you."/><div className="about-layout"><div className="about-sections">{sections.map(([title, text], index) => <section className="about-section" key={title}><div className="about-index">0{index + 1}</div><div><h2>{title}</h2><p>{text}</p></div></section>)}<section className="human-approval"><div className="approval-seal"><ShieldCheck size={23}/></div><div><span className="panel-kicker">HUMAN APPROVAL</span><h2>Officer review is part of the system.</h2><p>Recommendations and audit results are intended to support officer review. The officer approves every output.</p></div></section></div><aside className="about-side"><div className="about-side-top"><div className="brand-mark small"><span className="brand-mark-top"/><span className="brand-mark-bottom"/></div><span>SPEC-AUDIT / DEMO</span></div><h3>Designed for traceable review.</h3><p>Every result in this experience is local sample data. Placeholder identifiers like <strong>IS XXXX</strong> and <strong>Clause X.X</strong> are intentionally not factual registry claims.</p><div className="about-side-foot"><span className="registry-pulse"/>Snapshot date <strong>30 Sep 2026</strong></div></aside></div></>;
+  return (
+    <>
+      <PageHeading
+        eyebrow="PRODUCT NOTES"
+        title="About & limits"
+        description="A transparent view of what this demonstration can and cannot tell you."
+      />
+      <div className="about-layout">
+        <div className="about-sections">
+          {sections.map(([title, text], index) => (
+            <section className="about-section" key={title}>
+              <div className="about-index">0{index + 1}</div>
+              <div>
+                <h2>{title}</h2>
+                <p>{text}</p>
+              </div>
+            </section>
+          ))}
+          <section className="human-approval">
+            <div className="approval-seal">
+              <ShieldCheck size={23} />
+            </div>
+            <div>
+              <span className="panel-kicker">HUMAN APPROVAL</span>
+              <h2>Officer review is part of the system.</h2>
+              <p>
+                Recommendations and audit results are intended to support
+                officer review. The officer approves every output.
+              </p>
+            </div>
+          </section>
+        </div>
+        <aside className="about-side">
+          <div className="about-side-top">
+            <div className="brand-mark small">
+              <span className="brand-mark-top" />
+              <span className="brand-mark-bottom" />
+            </div>
+            <span>SPEC-AUDIT / DEMO</span>
+          </div>
+          <h3>Designed for traceable review.</h3>
+          <p>
+            Every result in this experience is local sample data. Placeholder
+            identifiers like <strong>IS XXXX</strong> and{" "}
+            <strong>Clause X.X</strong> are intentionally not factual registry
+            claims.
+          </p>
+          <div className="about-side-foot">
+            <span className="registry-pulse" />
+            Snapshot date <strong>30 Sep 2026</strong>
+          </div>
+        </aside>
+      </div>
+    </>
+  );
 }
 
 function Drawer({ drawer, close, addClause, navigate }) {
   const { kind, item = {} } = drawer;
   const isStandard = kind === "standard";
   const isGap = kind === "gap";
-  const title = isStandard ? "Standard rationale" : isGap ? "Audit gap" : kind === "source" ? "Source extract" : kind === "wording" ? "Wording flag" : "Requirement details";
-  return <motion.div className="drawer-layer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}><button className="drawer-backdrop" onClick={close} aria-label="Close details"/><motion.aside className="detail-drawer" initial={{ x: 420 }} animate={{ x: 0 }} exit={{ x: 420 }} transition={{ type: "spring", damping: 30, stiffness: 280 }}><div className="drawer-header"><div><span className="panel-kicker">{isStandard ? "SAMPLE REGISTRY RECORD" : isGap ? "ILLUSTRATIVE FINDING" : "REVIEW DETAIL"}</span><h2>{title}</h2></div><button className="icon-button" onClick={close} aria-label="Close drawer"><X size={18}/></button></div>
-    {isStandard ? <div className="drawer-body"><div className="drawer-standard-code"><div className="standard-emblem"><BookOpen size={17}/></div><div><strong>{item.code}</strong><span>{item.type} · Registry sample</span></div><Badge tone={item.status === "Active" ? "green" : "red"} dot>{item.status}</Badge></div><h3 className="drawer-item-title">{item.title}</h3><div className="drawer-section"><h4>Why was this selected?</h4><div className="rationale-list">{[["Requirement match", item.match || "Product scope detected"], ["Scope match", "Sample scope resembles extracted product requirements"], ["Product relevance", "LED lighting procurement context"], ["Version relevance", item.version || "Cannot verify against an authoritative registry"]].map(([label, value]) => <div key={label}><span><Check size={13}/>{label}</span><p>{value}</p></div>)}</div></div><div className="drawer-note"><CircleAlert size={15}/><span>{item.reason} This is mock data; verify the official record.</span></div><Button variant="secondary" onClick={() => { close(); navigate("versions"); }}>Review version history<ArrowRight size={14}/></Button></div> : <div className="drawer-body">{isGap && <Badge tone="red" dot>{item.type || "Missing decision"}</Badge>}{kind === "source" ? <><div className="drawer-section"><h4>Tender text</h4><blockquote>{tenderText}</blockquote></div><div className="drawer-note"><FileText size={15}/><span>Source document and page reference are illustrative.</span></div></> : <><div className="drawer-section"><h4>{isGap ? "Requirement" : "Flagged wording"}</h4><blockquote>{item.quote || item.title || "No excerpt available in sample data."}</blockquote></div><div className="drawer-section"><h4>Why this matters</h4><p className="drawer-explanation">{item.why || item.detail || "Review the source wording and confirm the applicable requirement with the procuring authority."}</p></div>{isGap && <div className="suggested-clause"><span className="panel-kicker">SUGGESTED CLAUSE · REVIEW REQUIRED</span><p>{item.suggestion || "Confirm a measurable requirement and the applicable reference before issue."}</p><span className="clause-source">Source: IS XXXX · Clause X.X · Illustrative</span></div>}{kind === "wording" && <div className="drawer-note"><Lightbulb size={15}/><span>This flag prompts review; it does not establish non-compliance.</span></div>}{isGap && <Button className="drawer-action" onClick={() => addClause(item)}>Add to improved tender<ArrowRight size={15}/></Button>}</>}</div>}
-    <div className="drawer-footer"><ShieldCheck size={14}/>Sample data · Human review required</div></motion.aside></motion.div>;
+  const title = isStandard
+    ? "Standard rationale"
+    : isGap
+      ? "Audit gap"
+      : kind === "source"
+        ? "Source extract"
+        : kind === "wording"
+          ? "Wording flag"
+          : "Requirement details";
+  return (
+    <motion.div
+      className="drawer-layer"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <button
+        className="drawer-backdrop"
+        onClick={close}
+        aria-label="Close details"
+      />
+      <motion.aside
+        className="detail-drawer"
+        initial={{ x: 420 }}
+        animate={{ x: 0 }}
+        exit={{ x: 420 }}
+        transition={{ type: "spring", damping: 30, stiffness: 280 }}
+      >
+        <div className="drawer-header">
+          <div>
+            <span className="panel-kicker">
+              {isStandard
+                ? "SAMPLE REGISTRY RECORD"
+                : isGap
+                  ? "ILLUSTRATIVE FINDING"
+                  : "REVIEW DETAIL"}
+            </span>
+            <h2>{title}</h2>
+          </div>
+          <button
+            className="icon-button"
+            onClick={close}
+            aria-label="Close drawer"
+          >
+            <X size={18} />
+          </button>
+        </div>
+        {isStandard ? (
+          <div className="drawer-body">
+            <div className="drawer-standard-code">
+              <div className="standard-emblem">
+                <BookOpen size={17} />
+              </div>
+              <div>
+                <strong>{item.code}</strong>
+                <span>{item.type} · Registry sample</span>
+              </div>
+              <Badge tone={item.status === "Active" ? "green" : "red"} dot>
+                {item.status}
+              </Badge>
+            </div>
+            <h3 className="drawer-item-title">{item.title}</h3>
+            <div className="drawer-section">
+              <h4>Why was this selected?</h4>
+              <div className="rationale-list">
+                {[
+                  ["Requirement match", item.match || "Product scope detected"],
+                  [
+                    "Scope match",
+                    "Sample scope resembles extracted product requirements",
+                  ],
+                  ["Product relevance", "LED lighting procurement context"],
+                  [
+                    "Version relevance",
+                    item.version ||
+                      "Cannot verify against an authoritative registry",
+                  ],
+                ].map(([label, value]) => (
+                  <div key={label}>
+                    <span>
+                      <Check size={13} />
+                      {label}
+                    </span>
+                    <p>{value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="drawer-note">
+              <CircleAlert size={15} />
+              <span>
+                {item.reason} This is mock data; verify the official record.
+              </span>
+            </div>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                close();
+                navigate("versions");
+              }}
+            >
+              Review version history
+              <ArrowRight size={14} />
+            </Button>
+          </div>
+        ) : (
+          <div className="drawer-body">
+            {isGap && (
+              <Badge tone="red" dot>
+                {item.type || "Missing decision"}
+              </Badge>
+            )}
+            {kind === "source" ? (
+              <>
+                <div className="drawer-section">
+                  <h4>Tender text</h4>
+                  <blockquote>{tenderText}</blockquote>
+                </div>
+                <div className="drawer-note">
+                  <FileText size={15} />
+                  <span>
+                    Source document and page reference are illustrative.
+                  </span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="drawer-section">
+                  <h4>{isGap ? "Requirement" : "Flagged wording"}</h4>
+                  <blockquote>
+                    {item.quote ||
+                      item.title ||
+                      "No excerpt available in sample data."}
+                  </blockquote>
+                </div>
+                <div className="drawer-section">
+                  <h4>Why this matters</h4>
+                  <p className="drawer-explanation">
+                    {item.why ||
+                      item.detail ||
+                      "Review the source wording and confirm the applicable requirement with the procuring authority."}
+                  </p>
+                </div>
+                {isGap && (
+                  <div className="suggested-clause">
+                    <span className="panel-kicker">
+                      SUGGESTED CLAUSE · REVIEW REQUIRED
+                    </span>
+                    <p>
+                      {item.suggestion ||
+                        "Confirm a measurable requirement and the applicable reference before issue."}
+                    </p>
+                    <span className="clause-source">
+                      Source: IS XXXX · Clause X.X · Illustrative
+                    </span>
+                  </div>
+                )}
+                {kind === "wording" && (
+                  <div className="drawer-note">
+                    <Lightbulb size={15} />
+                    <span>
+                      This flag prompts review; it does not establish
+                      non-compliance.
+                    </span>
+                  </div>
+                )}
+                {isGap && (
+                  <Button
+                    className="drawer-action"
+                    onClick={() => addClause(item)}
+                  >
+                    Add to improved tender
+                    <ArrowRight size={15} />
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
+        )}
+        <div className="drawer-footer">
+          <ShieldCheck size={14} />
+          Sample data · Human review required
+        </div>
+      </motion.aside>
+    </motion.div>
+  );
 }
 
 function ApprovalModal({ close, approve }) {
-  return <motion.div className="modal-layer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}><button className="modal-backdrop" onClick={close} aria-label="Close approval dialog"/><motion.div className="approval-modal" initial={{ opacity: 0, scale: 0.96, y: 8 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.97 }}><button className="icon-button modal-close" onClick={close} aria-label="Close dialog"><X size={17}/></button><div className="modal-icon"><ShieldCheck size={22}/></div><div className="eyebrow">OFFICER CONFIRMATION</div><h2>Approve this audit?</h2><p>This records a local demo approval for <strong>LED Lighting Procurement</strong>. It does not create an official record or verify the sample findings.</p><div className="modal-warning"><CircleAlert size={15}/><span>5 warnings and 2 unresolved items remain in this illustrative audit.</span></div><div className="modal-actions"><Button variant="secondary" onClick={close}>Go back</Button><Button onClick={approve}>Confirm approval<Check size={15}/></Button></div></motion.div></motion.div>;
+  return (
+    <motion.div
+      className="modal-layer"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <button
+        className="modal-backdrop"
+        onClick={close}
+        aria-label="Close approval dialog"
+      />
+      <motion.div
+        className="approval-modal"
+        initial={{ opacity: 0, scale: 0.96, y: 8 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.97 }}
+      >
+        <button
+          className="icon-button modal-close"
+          onClick={close}
+          aria-label="Close dialog"
+        >
+          <X size={17} />
+        </button>
+        <div className="modal-icon">
+          <ShieldCheck size={22} />
+        </div>
+        <div className="eyebrow">OFFICER CONFIRMATION</div>
+        <h2>Approve this audit?</h2>
+        <p>
+          This records a local demo approval for{" "}
+          <strong>LED Lighting Procurement</strong>. It does not create an
+          official record or verify the sample findings.
+        </p>
+        <div className="modal-warning">
+          <CircleAlert size={15} />
+          <span>
+            5 warnings and 2 unresolved items remain in this illustrative audit.
+          </span>
+        </div>
+        <div className="modal-actions">
+          <Button variant="secondary" onClick={close}>
+            Go back
+          </Button>
+          <Button onClick={approve}>
+            Confirm approval
+            <Check size={15} />
+          </Button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
 }

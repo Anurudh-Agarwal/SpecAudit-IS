@@ -13,7 +13,8 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "SpecAudit-IS | AI Tender Auditor",
-  description: "A prototype for traceable tender auditing against Indian Standards.",
+  description:
+    "A prototype for traceable tender auditing against Indian Standards.",
 };
 
 export default function RootLayout({ children }) {

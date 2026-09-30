@@ -1,5 +1,29 @@
 [
-  {"id":"TDR-0248","name":"LED Lighting Procurement","product":"LED lamps","updated":"Today, 10:42 AM","status":"Needs review","coverage":"9 / 17","registryDate":"30 Sep 2026"},
-  {"id":"TDR-0241","name":"Industrial Control Panels","product":"Electrical equipment","updated":"Yesterday","status":"In progress","coverage":"12 / 15","registryDate":"30 Sep 2026"},
-  {"id":"TDR-0236","name":"Campus Water Pumps","product":"Water pumps","updated":"24 Sep 2026","status":"Approved","coverage":"14 / 14","registryDate":"28 Sep 2026"}
+  {
+    "id": "TDR-0248",
+    "name": "LED Lighting Procurement",
+    "product": "LED lamps",
+    "updated": "Today, 10:42 AM",
+    "status": "Needs review",
+    "coverage": "9 / 17",
+    "registryDate": "30 Sep 2026"
+  },
+  {
+    "id": "TDR-0241",
+    "name": "Industrial Control Panels",
+    "product": "Electrical equipment",
+    "updated": "Yesterday",
+    "status": "In progress",
+    "coverage": "12 / 15",
+    "registryDate": "30 Sep 2026"
+  },
+  {
+    "id": "TDR-0236",
+    "name": "Campus Water Pumps",
+    "product": "Water pumps",
+    "updated": "24 Sep 2026",
+    "status": "Approved",
+    "coverage": "14 / 14",
+    "registryDate": "28 Sep 2026"
+  }
 ]
