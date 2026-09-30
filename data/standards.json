@@ -1,0 +1,6 @@
+[
+  {"id":"std-main","code":"IS XXXX","title":"LED lamps — general requirements","status":"Active","type":"Main","reason":"Product scope and general performance requirements align with the tender description.","match":"Product and scope match","version":"Current registry entry · Sample","related":["std-test","std-safety"]},
+  {"id":"std-test","code":"IS XXXX","title":"Methods of test for LED lamps","status":"Active","type":"Test","reason":"Provides a test-method reference for performance requirements that need measurable verification.","match":"Test requirement match","version":"Current registry entry · Sample","related":["std-main","std-safety"]},
+  {"id":"std-safety","code":"IS XXXX","title":"Safety of lighting equipment","status":"Superseded","type":"Safety","reason":"A successor entry is shown in this illustrative registry snapshot. Officer review is required.","match":"Safety relevance","version":"Superseded · Sample","related":["std-main","std-test"]},
+  {"id":"std-install","code":"IS XXXX","title":"Installation guidance for lighting systems","status":"Active","type":"Installation","reason":"Referenced for installation context only; confirm applicability for the procurement.","match":"Installation context","version":"Current registry entry · Sample","related":["std-main"]}
+]

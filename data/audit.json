@@ -1,0 +1,16 @@
+{
+  "coverage": 9,
+  "total": 17,
+  "covered": [
+    {"title":"Product identified","detail":"LED lamps","type":"Product scope","clause":"Tender context"},
+    {"title":"Applicable standard identified","detail":"A main standard has been recommended for review.","type":"Standard reference","clause":"Reference unresolved"},
+    {"title":"Safety requirement found","detail":"Safety scope was detected in the sample registry.","type":"Safety","clause":"Suggested Clause X.X"}
+  ],
+  "gaps": [
+    {"title":"Test method not specified","type":"Missing test","quote":"conforming to relevant IS","why":"Without a named test method, the basis for verifying performance remains unclear.","clause":"Suggested Clause X.X","suggestion":"LED lamps shall be tested in accordance with the applicable test method identified by the procuring authority."},
+    {"title":"Acceptance criteria missing","type":"Missing decision","quote":"","why":"The tender does not state measurable acceptance criteria for the supplied product.","clause":"Suggested Clause X.X","suggestion":"Each supplied unit shall meet the acceptance criteria stated in the applicable procurement schedule."},
+    {"title":"“Good quality” is non-measurable","type":"Non-measurable wording","quote":"good quality","why":"The phrase does not define a measurable acceptance criterion.","clause":"Suggested Clause X.X","suggestion":"Replace “good quality” with measurable performance and acceptance criteria approved by the procuring authority."},
+    {"title":"Reference to standard unresolved","type":"Unresolved reference","quote":"relevant IS","why":"The tender does not identify a specific standard or edition for this requirement.","clause":"Suggested Clause X.X","suggestion":"The procuring authority shall specify the applicable Indian Standard and edition after officer review."},
+    {"title":"Rating range not specified","type":"Out of range","quote":"","why":"No rating or operating range was included in the sample requirement.","clause":"Suggested Clause X.X","suggestion":"Specify the required rating and operating range in the procurement schedule."}
+  ]
+}

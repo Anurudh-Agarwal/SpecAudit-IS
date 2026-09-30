@@ -1,0 +1,7 @@
+[
+  {"label":"Product","value":"LED lamp","confidence":"High","icon":"box"},
+  {"label":"Rating","value":"Not specified","confidence":"Low","icon":"activity"},
+  {"label":"Grade","value":"General purpose","confidence":"Medium","icon":"layers"},
+  {"label":"Unit","value":"Piece","confidence":"High","icon":"hash"},
+  {"label":"Test method","value":"Not specified","confidence":"Low","icon":"flask"}
+]
